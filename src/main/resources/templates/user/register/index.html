@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head >
+
+    <div th:replace="fragments :: head"></div>
+
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+
+</head>
+
+<body>
+
+<div class="center-vertical">
+    <div class="container main-container">
+
+    <div class="row">
+        <div class="col-md-12 registration-title">
+            <h1 class="names">Registration</h1>
+        </div>
+
+    </div>
+
+        <form method="POST" action="/user/register" role="form" id="register-form" th:object="${user}">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="names" th:for="userName">Username*</label>
+                        <input id="userName" th:field="*{userName}" class="form-control" />
+                        <span th:errors="*{userName}" class="error"></span>
+                        <span th:text="${nameError}" class="error"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group" >
+                        <label class="names" th:for="password">Password*</label>
+                        <input id="modal-password" type="password" th:field="*{password}" class="form-control" />
+                        <span th:errors="*{password}" class="error"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="names" th:for="verifyPassword">Verify Password*</label>
+                        <input id="verify" type="password" th:field="*{verifyPassword}" class="form-control" />
+                        <span th:text="${matchError}" class="error"></span>
+                    </div>
+                </div>
+            </div>
+
+                <div class="row">
+                    <div class="col-md-12 optional-title">
+                        <fieldset><legend>Optional</legend></fieldset>
+                        <!--<h4 class="names">Optional</h4>-->
+                    </div>
+                </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <input type="hidden" value="*{id}"/>
+                    <div class="register-button">
+                        <button type="submit" class="btn btn-success register-button">Register</button>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

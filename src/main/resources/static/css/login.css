@@ -1,0 +1,221 @@
+body{
+    background-image: url("https://goo.gl/2vCPF3");
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.9;
+}
+
+#login-button{
+    max-width: 142px;
+    margin: 0 auto;
+    margin-top: -5px;
+    border-style: none;
+}
+
+#login-button:hover{
+    background-color: green;
+}
+
+.main-container{
+    background-color: rgb(101, 168, 63);
+    max-width: 77.25%;
+}
+
+.name-container{
+    background-color: black;
+    color: rgb(101, 168, 63);
+    border: 2.5px solid rgb(101, 168, 63);
+
+}
+
+.login-container {
+    background: radial-gradient(#D3ECC4, #B3DE99, #85bb65);
+    border: 2.5px solid rgb(101, 168, 63);
+    padding: 10px;
+}
+
+.third-party{
+    background: radial-gradient(#D3ECC4, #B3DE99, #85bb65);
+    border: 2.5px solid rgb(101, 168, 63);
+    padding-bottom: 7px;
+}
+
+.third-party p{
+    text-align: center;
+    margin-top: 2.5px;
+}
+
+.third-party fieldset{
+    border-top: 1px solid black;
+    margin-top: -10px;
+}
+
+.third-party legend{
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
+    width: auto;
+    border-bottom: none;
+    margin-bottom: 5px;
+}
+
+.about-container{
+    background: radial-gradient(#D3ECC4, #B3DE99, #85bb65);
+    border: 2.5px solid rgb(101, 168, 63);
+
+}
+
+.about-container h2{
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.features-content td{
+   padding-top: 30px;
+}
+
+.features-content img{
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+
+}
+
+#img-three{
+    margin-left: 10px;
+}
+
+#img-two{
+    margin-left: -2px;
+}
+
+#table-one{
+    float: left;
+    margin-right: 20px;
+}
+
+#forgot-password{
+    float: right;
+}
+
+#forgot-user{
+    float: right;
+    position: relative;
+    top: -10;
+}
+
+.name{
+    font-size: 38px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.slogan{
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    text-align: center;
+    margin-top: -7px;
+}
+
+.form-control:focus{
+    border-color: black;
+    box-shadow: none;
+}
+
+.checkbox-label{
+    font-weight: normal;
+    position: relative;
+    top: -2px;
+    left: -30px;
+
+}
+
+
+#password{
+    margin-top: -10px;
+}
+
+.name-container .top-table{
+    background-color: rgb(101, 168, 63);
+    color: black;
+
+}
+
+#remember-me{
+    position: relative;
+    top: 1.5px;
+
+}
+
+#show-password{
+    position: relative;
+    top: 1.5px;
+
+
+}
+
+.g-signin2{
+  width: 100%;
+}
+
+.g-signin2 > div{
+  margin: 0 auto;
+}
+
+.center-vertical{
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.close, .close:hover{
+    color: red;
+}
+
+.input-error{
+        color: red;
+        border: 1px solid red;
+}
+
+.form-control.input-error{
+        border-color: red;
+        box-shadow: none;
+        color: black;
+}
+
+.red-tooltip + .tooltip > .tooltip-inner{
+    background-color: red;
+}
+
+.red-tooltip + .tooltip > .tooltip-arrow{
+    border-left-color: red;
+}
+
+.form-group{
+    text-align: center;
+}
+
+.error{
+    position: absolute;
+    font-size: 12px;
+    color: red;
+}
+.passwordError{
+    position: absolute;
+    right: 15px;
+    font-size: 12px;
+    color: red;
+}
+
+
+
+
+
+
+

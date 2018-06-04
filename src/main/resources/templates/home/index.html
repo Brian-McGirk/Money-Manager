@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+
+    <div th:replace="fragments :: head"></div>
+
+</head>
+
+<body class="container">
+
+<h2 th:text="'Welcome ' + ${userName}"></h2>
+
+<a href="/user/logout">Logout</a>
+
+
+
+</body>
+</html>

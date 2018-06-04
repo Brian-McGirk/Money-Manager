@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head >
+
+    <div th:replace="fragments :: head"></div>
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
+
+
+</head>
+
+<body>
+
+<div class="center-vertical">
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-md-8 name-container">
+                <p class="name">Budget Master</p>
+                <p class="slogan">May the budget be with you!</p>
+                <div class="row top-table">
+                    <div class="col-md-6 hidden-sm hidden-xs">
+                        <table id="table-one" class="features-content">
+                            <tr>
+                                <td><img src="https://goo.gl/6xkPYc" alt="Sorry this image didn't load"/></td>
+                                <td>Make a budget</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6 hidden-sm hidden-xs">
+                        <table id="table-two" class="features-content">
+                            <tr>
+                                <td><img id="img-two" src="https://i.imgur.com/pjVKJqL.png"/></td>
+                                <td>Weekly and monthly reports</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 login-container">
+
+                <form method="POST" action="/user/login" th:object="${user}">
+
+                    <div class="form-group">
+                        <span th:errors="*{userName}" class="error"></span>
+                        <input class="login-user form-control"  th:field="*{userName}" placeholder="Username" />
+                        <label class="checkbox-label"><input id="remember-me" type="checkbox" name="remember-me"/>Remember me</label>
+                        <a id="forgot-user" href="">Forgot Username?</a>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <span th:errors="*{password}" class="error"></span>
+                        <span th:text="${passwordError}" class="passwordError"></span>
+                        <input id="password" class="login-password form-control" type="password" th:field="*{password}" placeholder="Password"/>
+                        <label class="checkbox-label"><input id="show-password" type="checkbox" name="show-password" onclick="showPassword()"/>Show password</label>
+                        <a id="forgot-password" href="">Forgot Password?</a>
+                    </div>
+
+                    <input id="login-button" class="form-control" type="submit" value="Log in"/>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 hidden-sm hidden-xs">
+                <table id="table-one" class="features-content">
+                    <tr>
+                        <td><img src="https://goo.gl/bzFGne" alt="Sorry this image didn't load"/></td>
+                        <td>Manage individually or with a partner</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4 hidden-sm hidden-xs">
+                <table id="table-two" class="features-content">
+                    <tr>
+                        <td><img src="https://goo.gl/nYVgZm" alt="Sorry this image didn't load"/></td>
+                        <td>Track where your money goes</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4 third-party">
+                <p>Need an account? <a href="/user/register">Create one!</a></p>
+                <fieldset><legend>OR</legend></fieldset>
+                <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 hidden-sm hidden-xs">
+                <table id="table-one" class="features-content">
+                    <tr>
+                        <td><img id="img-three" src="https://goo.gl/M2cvtE" alt="Sorry this image didn't load"/></td>
+                        <td>Review your spending habits</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4 hidden-sm hidden-xs">
+                <table id="table-two" class="features-content">
+                    <tr>
+                        <td><img src="https://goo.gl/RXxALz" alt="Sorry this image didn't load"/></td>
+                        <td>See your net worth</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4 about-container">
+                <h2>About me</h2>
+                <p>It can be hard to keep track of expenses. That's why you needs this app. This app is to help you manage your money better. In a few months of using this app you will be able to see where your money is going and adjust your budget accordingly.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Register Modal-->
+
+<!-- Modal -->
+<!--<div id="registerModel" class="modal fade" role="dialog">-->
+    <!--<div class="modal-dialog">-->
+
+        <!--&lt;!&ndash; Modal content&ndash;&gt;-->
+        <!--<div class="modal-content modal-window">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                <!--<h2 class="modal-title">Registration Form</h2>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<form method="POST" action="/user/register" role="form" id="register-form" th:object="${user}">-->
+
+                    <!--<div class="row">-->
+                        <!--<div class="form-group">-->
+                            <!--<label th:for="userName">Username or Email</label>-->
+                            <!--<input id="userName" th:field="*{userName}" class="form-control" />-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="form-group" >-->
+                            <!--<label th:for="password">Password</label>-->
+                                <!--<input id="modal-password" type="password" th:field="*{password}" class="form-control" />-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="form-group">-->
+                            <!--<label th:for="verifyPassword">Verify Password</label>-->
+                                <!--<input id="verify" type="password" th:field="*{verifyPassword}" class="form-control" />-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<input type="hidden" value="*{id}"/>-->
+                    <!--<div class="button modal-footer register-button">-->
+                        <!--<button type="submit" class="btn btn-success">Register</button>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+</body>
+</html>

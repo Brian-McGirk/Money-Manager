@@ -1,0 +1,61 @@
+.main-container{
+    background-color: black;
+    max-width: 77.25%;
+    min-height: 77vh;
+}
+
+.center-vertical{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.register-button{
+    text-align: center;
+    min-width: 80%;
+
+}
+
+#register-form{
+    padding: 5px;
+}
+
+.registration-title{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+fieldset{
+    border-top: 1px solid rgb(101, 168, 63);
+    margin-top: 5px;
+
+}
+
+legend{
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
+    width: auto;
+    border-bottom: none;
+    margin-bottom: 5px;
+    color: rgb(101, 168, 63);
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+.optional-title{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.error{
+    position: absolute;
+    color: red;
+}
+
+.names{
+    color: rgb(101, 168, 63);
+}
