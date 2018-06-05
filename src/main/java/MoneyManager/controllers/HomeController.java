@@ -16,7 +16,7 @@ public class HomeController {
         Object userInSession = httpSession.getAttribute("user");
 
         if(userInSession == null){
-            return "redirect:login";
+            return "redirect:user/login";
         }
 
         model.addAttribute("userName", userInSession);
@@ -24,5 +24,20 @@ public class HomeController {
         return "home/index";
 
     }
+
+//    @RequestMapping(value = "home", method = RequestMethod.POST)
+//    public String processHome(Model model, HttpSession httpSession){
+//
+//        Object userInSession = httpSession.getAttribute("user");
+//
+//        if(userInSession == null){
+//            return "redirect:login";
+//        }
+//
+//        model.addAttribute("userName", userInSession);
+//
+//        return "home/index";
+//
+//    }
 
 }

@@ -45,6 +45,7 @@
 
                     <div class="form-group">
                         <span th:errors="*{userName}" class="error"></span>
+                        <span th:text="${nameError}" class="customError"></span>
                         <input class="login-user form-control"  th:field="*{userName}" placeholder="Username" />
                         <label class="checkbox-label"><input id="remember-me" type="checkbox" name="remember-me"/>Remember me</label>
                         <a id="forgot-user" href="">Forgot Username?</a>
@@ -54,7 +55,7 @@
 
                     <div class="form-group">
                         <span th:errors="*{password}" class="error"></span>
-                        <span th:text="${passwordError}" class="passwordError"></span>
+                        <span th:text="${passwordError}" class="customError"></span>
                         <input id="password" class="login-password form-control" type="password" th:field="*{password}" placeholder="Password"/>
                         <label class="checkbox-label"><input id="show-password" type="checkbox" name="show-password" onclick="showPassword()"/>Show password</label>
                         <a id="forgot-password" href="">Forgot Password?</a>

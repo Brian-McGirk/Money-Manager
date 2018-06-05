@@ -41,14 +41,21 @@ public class UserController {
         Object userInSession = httpSession.getAttribute("user");
 
 
+
+
         if(errors.hasErrors()){
             model.addAttribute(user);
             return "user/login/index";
         }
 
+        if(findByUserName == null){
+            model.addAttribute("nameError", "Username doesn't exist");
+            return "user/login/index";
+        }
+
         if(findByUserName != null && findByUserName.getPassword().equals(user.getPassword())){
             httpSession.setAttribute("user", user.getUserName());
-            return "redirect:home";
+            return "redirect:/home";
         }
 
         model.addAttribute("passwordError", "Invalid password");
@@ -65,7 +72,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ModelAndView processRegister(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
+    public String processRegister(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
 
         boolean userName = userDao.existsByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
@@ -73,7 +80,7 @@ public class UserController {
 
         if(userName){
             model.addAttribute("nameError", "Username already exists");
-            return new ModelAndView("/user/register/index");
+            return "user/register/index";
         }
 
         if(!user.getPassword().equals(user.getVerifyPassword())){
@@ -82,7 +89,7 @@ public class UserController {
 
         if(errors.hasErrors()){
             model.addAttribute(user);
-            return new ModelAndView("/user/register/index");
+            return "user/register/index";
         }
 
         if(user.getPassword().equals(user.getVerifyPassword())){
@@ -90,14 +97,14 @@ public class UserController {
                 httpSession.setAttribute("user", user.getUserName());
             }
 
-//            userDao.save(user);
+            userDao.save(user);
 
-            return new ModelAndView("redirect:/home");
+            return "redirect:/home";
         }
 
 
 
-        return new ModelAndView("user/register/index");
+        return "user/register/index";
     }
 
 //    @RequestMapping(value = "home", method = RequestMethod.GET)
