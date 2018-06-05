@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -63,7 +65,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String processRegister(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
+    public ModelAndView processRegister(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
 
         boolean userName = userDao.existsByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
@@ -71,7 +73,7 @@ public class UserController {
 
         if(userName){
             model.addAttribute("nameError", "Username already exists");
-            return "user/register/index";
+            return new ModelAndView("/user/register/index");
         }
 
         if(!user.getPassword().equals(user.getVerifyPassword())){
@@ -80,7 +82,7 @@ public class UserController {
 
         if(errors.hasErrors()){
             model.addAttribute(user);
-            return "user/register/index";
+            return new ModelAndView("/user/register/index");
         }
 
         if(user.getPassword().equals(user.getVerifyPassword())){
@@ -90,43 +92,43 @@ public class UserController {
 
 //            userDao.save(user);
 
-            return "redirect:home";
+            return new ModelAndView("redirect:/home");
         }
 
 
 
-        return "user/register/index";
+        return new ModelAndView("user/register/index");
     }
 
-    @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String displayHome(Model model, HttpSession httpSession){
-
-        Object userInSession = httpSession.getAttribute("user");
-
-        if(userInSession == null){
-            return "redirect:login";
-        }
-
-        model.addAttribute("userName", userInSession);
-
-        return "home/index";
-
-    }
-
-    @RequestMapping(value = "home", method = RequestMethod.POST)
-    public String processHome(Model model, HttpSession httpSession){
-
-        Object userInSession = httpSession.getAttribute("user");
-
-        if(userInSession == null){
-            return "redirect:login";
-        }
-
-        model.addAttribute("userName", userInSession);
-
-        return "home/index";
-
-    }
+//    @RequestMapping(value = "home", method = RequestMethod.GET)
+//    public String displayHome(Model model, HttpSession httpSession){
+//
+//        Object userInSession = httpSession.getAttribute("user");
+//
+//        if(userInSession == null){
+//            return "redirect:login";
+//        }
+//
+//        model.addAttribute("userName", userInSession);
+//
+//        return "home/index";
+//
+//    }
+//
+//    @RequestMapping(value = "home", method = RequestMethod.POST)
+//    public String processHome(Model model, HttpSession httpSession){
+//
+//        Object userInSession = httpSession.getAttribute("user");
+//
+//        if(userInSession == null){
+//            return "redirect:login";
+//        }
+//
+//        model.addAttribute("userName", userInSession);
+//
+//        return "home/index";
+//
+//    }
 
 
 
