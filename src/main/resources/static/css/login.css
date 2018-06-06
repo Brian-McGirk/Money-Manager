@@ -10,8 +10,9 @@ body{
 #login-button{
     max-width: 142px;
     margin: 0 auto;
-    margin-top: -5px;
+    margin-top: 5px;
     border-style: none;
+    margin-bottom: 5px;
 }
 
 #login-button:hover{

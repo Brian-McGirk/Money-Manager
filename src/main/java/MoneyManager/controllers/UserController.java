@@ -42,21 +42,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String processLogin(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession,
-                               @RequestParam(required = false) String rememberMe, HttpServletRequest request,
-                               HttpServletResponse response){
+    public String processLogin(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
 
         User findByUserName = userDao.findByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
-        Cookie cookies[];
-        cookies = request.getCookies();
-
-
-        if(rememberMe != null){
-            RandomValueStringGenerator test = new RandomValueStringGenerator(25);
-            System.out.println(test.generate());
-        }
-
 
         if(userInSession != null && userInSession.equals(user.getUserName())){
             model.addAttribute("nameError", "User already logged in");
