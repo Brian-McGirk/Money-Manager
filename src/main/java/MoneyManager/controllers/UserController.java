@@ -4,12 +4,18 @@ import MoneyManager.models.User;
 import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -36,10 +42,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String processLogin(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
+    public String processLogin(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession,
+                               @RequestParam(required = false) String rememberMe, HttpServletRequest request,
+                               HttpServletResponse response){
 
         User findByUserName = userDao.findByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
+        Cookie cookies[];
+        cookies = request.getCookies();
+
+
+        if(rememberMe != null){
+            RandomValueStringGenerator test = new RandomValueStringGenerator(25);
+            System.out.println(test.generate());
+        }
 
 
         if(userInSession != null && userInSession.equals(user.getUserName())){
@@ -56,7 +72,6 @@ public class UserController {
             model.addAttribute("nameError", "Username doesn't exist");
             return "user/login/index";
         }
-
 
 //        findByUserName.getPassword().equals(user.getPassword())
         if(findByUserName != null && BCrypt.checkpw(user.getPassword(), findByUserName.getPw_hash())){
