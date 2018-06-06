@@ -16,6 +16,7 @@ body{
 
 #login-button:hover{
     background-color: green;
+    color: black;
 }
 
 .main-container{
@@ -44,7 +45,7 @@ body{
 
 .third-party p{
     text-align: center;
-    margin-top: 2.5px;
+    margin-top: 10px;
 }
 
 .third-party fieldset{
@@ -131,8 +132,7 @@ body{
     font-weight: normal;
     position: relative;
     top: -2px;
-    left: -30px;
-
+    left: -85px;
 }
 
 
@@ -159,14 +159,6 @@ body{
 
 }
 
-.g-signin2{
-  width: 100%;
-}
-
-.g-signin2 > div{
-  margin: 0 auto;
-}
-
 .center-vertical{
     min-height: 100%;
     min-height: 100vh;
@@ -189,14 +181,6 @@ body{
         color: black;
 }
 
-.red-tooltip + .tooltip > .tooltip-inner{
-    background-color: red;
-}
-
-.red-tooltip + .tooltip > .tooltip-arrow{
-    border-left-color: red;
-}
-
 .form-group{
     text-align: center;
 }
@@ -213,6 +197,41 @@ body{
     font-size: 12px;
     color: red;
 }
+
+.register-div{
+    width: 200px;
+    height: 32px;
+    background-color: white;
+    margin: 0 auto;
+    border-style: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.register-div:hover{
+    background-color: green;
+    color: black;
+}
+
+.register-anchor{
+    text-align:center;
+    color: rgb(85, 85, 85);
+    text-decoration: none;
+}
+
+.register-anchor:hover{
+    color: black;
+    text-decoration: none;
+}
+
+.register-span{
+    position: relative;
+    top: 6px;
+}
+
+
+
 
 
 

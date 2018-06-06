@@ -16,7 +16,10 @@ public class User {
     @Size(min=3, max=20, message = "Username must be 3-20 characters")
     private String userName;
 
+    private String pw_hash;
+
     @NotNull
+    @Transient
     @Size(min=3, max=20, message = "Password must be 5-15 characters")
     private String password;
 
@@ -35,6 +38,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPw_hash() {
+        return pw_hash;
+    }
+
+    public void setPw_hash(String pw_hash) {
+        this.pw_hash = pw_hash;
     }
 
     public String getPassword() {

@@ -13,6 +13,8 @@
 
 <body>
 
+<div th:replace="fragments:: navigation"></div>
+
 <div class="center-vertical">
     <div class="container main-container">
         <div class="row">
@@ -48,7 +50,7 @@
                         <span th:text="${nameError}" class="customError"></span>
                         <input class="login-user form-control"  th:field="*{userName}" placeholder="Username" />
                         <label class="checkbox-label"><input id="remember-me" type="checkbox" name="remember-me"/>Remember me</label>
-                        <a id="forgot-user" href="">Forgot Username?</a>
+                        <!--<a id="forgot-user" href="">Forgot Username?</a>-->
                     </div>
 
 
@@ -58,7 +60,7 @@
                         <span th:text="${passwordError}" class="customError"></span>
                         <input id="password" class="login-password form-control" type="password" th:field="*{password}" placeholder="Password"/>
                         <label class="checkbox-label"><input id="show-password" type="checkbox" name="show-password" onclick="showPassword()"/>Show password</label>
-                        <a id="forgot-password" href="">Forgot Password?</a>
+                        <!--<a id="forgot-password" href="">Forgot Password?</a>-->
                     </div>
 
                     <input id="login-button" class="form-control" type="submit" value="Log in"/>
@@ -85,9 +87,9 @@
                 </table>
             </div>
             <div class="col-md-4 third-party">
-                <p>Need an account? <a href="/user/register">Create one!</a></p>
-                <fieldset><legend>OR</legend></fieldset>
-                <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true"></div>
+                <p>Need an account?</p>
+                <a class="register-anchor" href="/user/register"><div class="register-div"><span class="register-span">Register</span></div></a>
+
             </div>
         </div>
 

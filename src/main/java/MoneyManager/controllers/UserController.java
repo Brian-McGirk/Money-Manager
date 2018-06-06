@@ -3,12 +3,13 @@ package MoneyManager.controllers;
 import MoneyManager.models.User;
 import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -41,7 +42,10 @@ public class UserController {
         Object userInSession = httpSession.getAttribute("user");
 
 
-
+        if(userInSession != null && userInSession.equals(user.getUserName())){
+            model.addAttribute("nameError", "User already logged in");
+            return "user/login/index";
+        }
 
         if(errors.hasErrors()){
             model.addAttribute(user);
@@ -53,7 +57,9 @@ public class UserController {
             return "user/login/index";
         }
 
-        if(findByUserName != null && findByUserName.getPassword().equals(user.getPassword())){
+
+//        findByUserName.getPassword().equals(user.getPassword())
+        if(findByUserName != null && BCrypt.checkpw(user.getPassword(), findByUserName.getPw_hash())){
             httpSession.setAttribute("user", user.getUserName());
             return "redirect:/home";
         }
@@ -83,6 +89,7 @@ public class UserController {
             return "user/register/index";
         }
 
+
         if(!user.getPassword().equals(user.getVerifyPassword())){
             model.addAttribute("matchError", "Passwords don't match");
         }
@@ -92,10 +99,16 @@ public class UserController {
             return "user/register/index";
         }
 
+
         if(user.getPassword().equals(user.getVerifyPassword())){
-            if(userInSession == null){
-                httpSession.setAttribute("user", user.getUserName());
+            if(userInSession != null && userInSession.equals(user.getUserName())){
+                model.addAttribute("nameError", "User already logged in");
+                return "user/register/index";
             }
+
+            user.setPw_hash(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            httpSession.setAttribute("user", user.getUserName());
+
 
             userDao.save(user);
 
