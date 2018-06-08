@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
 <head>
 
     <div th:replace="fragments :: head"></div>
@@ -14,23 +15,16 @@
 
 <br>
 
-<table>
-    <tr class="table-column">
-        <th>Category</th>
-        <th>Expense</th>
-        <th>Cost</th>
-        <th>Date</th>
-    </tr>
-    <tr>
-        <td rowspan="">add category here</td>
-        <td>add expense here</td>
-        <td>add cost here</td>
-        <td>add date here</td>
-    </tr>
+<h5 th:text="${user.userName + ' User'}"></h5>
 
-</table>
+<!--<p th:unless="${user} and ${user.size()}">no expenses yet</p>-->
 
+<ul>
+    <li th:each="expense : ${user.expenses}" th:text="${user.userName}">
+    </li>
+</ul>
 
+<p><a th:href="'/user/add-item/' + ${user.id}">Add Expense</a></p>
 
 </body>
 </html>

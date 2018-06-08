@@ -1,7 +1,10 @@
 package MoneyManager.controllers;
 
+import MoneyManager.models.Expense;
 import MoneyManager.models.User;
+import MoneyManager.models.data.ExpenseDao;
 import MoneyManager.models.data.UserDao;
+import MoneyManager.models.forms.AddUserExpenseForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
@@ -26,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ExpenseDao expenseDao;
 
     @RequestMapping(value = "logout")
     public String logout(HttpSession httpSession){
@@ -124,6 +130,44 @@ public class UserController {
         return "user/register/index";
     }
 
+    @RequestMapping(value = "edit")
+    public String displayEditLinks(Model model){
+
+        return "user/edit/index";
+    }
+
+    @RequestMapping(value = "add-expense", method = RequestMethod.GET)
+    public String displayAddExpense(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
+        AddUserExpenseForm form = new AddUserExpenseForm(expenseDao.findAll(), user);
+
+        model.addAttribute("form", form);
+
+        return "user/add-expense";
+    }
+
+    @RequestMapping(value = "add-expense", method = RequestMethod.POST)
+    public String processAddExpense(Model model, @ModelAttribute @Valid AddUserExpenseForm form,
+                                    Errors errors){
+
+        if(errors.hasErrors()){
+            model.addAttribute("form", form);
+            return "user/add-expense";
+        }
+
+        Expense expense = expenseDao.findById(form.getExpenseId()).get();
+        User user = userDao.findById(form.getUserId()).get();
+        user.addItem(expense);
+        userDao.save(user);
+
+        return "redirect:/home/view/" + user.getId();
+    }
+
+}
+
 //    @RequestMapping(value = "home", method = RequestMethod.GET)
 //    public String displayHome(Model model, HttpSession httpSession){
 //
@@ -153,8 +197,3 @@ public class UserController {
 //        return "home/index";
 //
 //    }
-
-
-
-
-}

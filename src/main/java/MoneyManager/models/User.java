@@ -3,6 +3,8 @@ package MoneyManager.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -25,6 +27,9 @@ public class User {
 
     @Transient
     private String verifyPassword;
+
+    @ManyToMany
+    private List<Expense> expenses;
 
     public User() {}
 
@@ -64,6 +69,15 @@ public class User {
         this.verifyPassword = verifyPassword;
 
     }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void addItem(Expense item){
+        expenses.add(item);
+    }
+
 
 //    private void checkPassword(){
 //        if(this.password != null && this.verifyPassword != null && !this.password.equals(this.verifyPassword)){

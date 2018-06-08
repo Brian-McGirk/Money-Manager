@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head >
+
+    <div th:replace="fragments :: head"></div>
+    <div th:replace="fragments :: navBarMargin"></div>
+
+</head>
+
+<body class="container marginUnderNavBar">
+
+<div th:replace="fragments:: navigation"></div>
+
+<br>
+
+<a href="/category/add">Add Category </a> |
+<a href="/category/edit">Edit Category </a> |
+<a href="/category/remove">Remove Category </a> |
+
+<a href="/expense/add">Add Expense </a> |
+<a href="/expense/edit">Edit Expense </a> |
+<a href="/expense/remove">Remove Expense </a> |
+
+</body>
+</html>

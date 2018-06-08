@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+
+    <div th:replace="fragments :: head"></div>
+    <div th:replace="fragments :: navBarMargin"></div>
+
+</head>
+
+<body class="container marginUnderNavBar">
+
+<div th:replace="fragments :: navigation"></div>
+
+<h3>Current categories:</h3>
+
+<ul>
+    <li th:each="category : ${categories}" th:text="${category.name}"></li>
+</ul>
+
+<br>
+
+<h3>Add a new category</h3>
+
+<form method="post" th:object="${category}">
+    <div class="form-group">
+        <label th:for="name"></label>
+        <input class="form-control" th:field="*{name}"/>
+        <span th:errors="*{name}"></span>
+        <input type="submit" value="Add category"/>
+    </div>
+</form>
+
+
+</body>
+</html>

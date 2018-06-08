@@ -1,7 +1,10 @@
 package MoneyManager.controllers;
 
+import MoneyManager.models.data.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
@@ -9,6 +12,9 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("home")
 public class HomeController {
+
+    @Autowired
+    private UserDao userDao;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String displayHome(Model model, HttpSession httpSession){
@@ -22,6 +28,15 @@ public class HomeController {
         model.addAttribute("userName", userInSession);
 
         return "home/index";
+
+    }
+
+    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
+    public String displayView(Model model, @PathVariable int id){
+
+        model.addAttribute("user", userDao.findById(id).get());
+
+        return "home/view";
 
     }
 
