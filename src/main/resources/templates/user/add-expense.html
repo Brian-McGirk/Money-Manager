@@ -5,29 +5,49 @@
 
     <div th:replace="fragments :: head"></div>
     <div th:replace="fragments :: navBarMargin"></div>
+    <link rel="stylesheet" th:href="@{/css/add-expense.css}" />
 
 </head>
 
 <body class="container marginUnderNavBar">
 
-<br>
-
 <div th:replace="fragments:: navigation"></div>
 
-<h3 th:text="'Hello ' + ${form.user.userName}"></h3>
+<!--<h3>Current categories:</h3>-->
 
-<form method="post" style="max-width:600px;" th:object="${form}">
+<!--<ul>-->
+    <!--<li th:each="expense : ${user.expenses}" th:text="${expense.category.name}"></li>-->
+<!--</ul>-->
+
+
+<!--<h3>Current expenses:</h3>-->
+
+<!--<ul>-->
+    <!--<li th:each="expense : ${user.expenses}" th:text="${expense.name}"></li>-->
+<!--</ul>-->
+
+<form method="post" th:object="${expense}">
     <div class="form-group">
-        <label th:for="expenseId">Type</label>
-        <select name="expenseId">
-            <option th:each="expense : *{expenses}"
-                    th:text="${expense.name}"
-                    th:value="${expense.id}"></option>
-        </select>
+        <label for="category">Category</label>
+        <input class="form-control" id="category" name="categoryName"/>
     </div>
-    <input type="hidden" name="userId" th:value="*{user.id}" />
-    <input type="submit" value="Add Item"/>
+
+    <div class="form-group">
+        <label th:for="name">Expense</label>
+        <input class="form-control" th:field="*{name}"/>
+        <span th:errors="*{name}"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="cost">Cost</label>
+        <input class="form-control" th:field="*{cost}"/>
+        <span th:errors="*{cost}"></span>
+        <br>
+        <input type="submit" value="Add all"/>
+    </div>
+
 </form>
+
+
 
 </body>
 </html>

@@ -30,7 +30,6 @@ public class CategoryController {
         }
 
         model.addAttribute("title", "Add Category");
-        model.addAttribute("categories", categoryDao.findAll());
         model.addAttribute(new Category());
 
 
@@ -42,8 +41,6 @@ public class CategoryController {
 
         if(errors.hasErrors()){
             model.addAttribute("title", "Add Category");
-            model.addAttribute("categories", categoryDao.findAll());
-
             return "category/add";
         }
 

@@ -1,10 +1,13 @@
 package MoneyManager.controllers;
 
+import MoneyManager.models.Category;
 import MoneyManager.models.Expense;
 import MoneyManager.models.User;
+import MoneyManager.models.data.CategoryDao;
 import MoneyManager.models.data.ExpenseDao;
 import MoneyManager.models.data.UserDao;
 import MoneyManager.models.forms.AddUserExpenseForm;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
@@ -32,6 +35,9 @@ public class UserController {
 
     @Autowired
     private ExpenseDao expenseDao;
+
+    @Autowired
+    private CategoryDao categoryDao;
 
     @RequestMapping(value = "logout")
     public String logout(HttpSession httpSession){
@@ -136,64 +142,82 @@ public class UserController {
         return "user/edit/index";
     }
 
+
     @RequestMapping(value = "add-expense", method = RequestMethod.GET)
-    public String displayAddExpense(Model model, HttpSession httpSession){
+    public String displayAddForm(Model model, HttpSession httpSession){
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
 
-        AddUserExpenseForm form = new AddUserExpenseForm(expenseDao.findAll(), user);
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
 
-        model.addAttribute("form", form);
+        model.addAttribute("title", "Add Category");
+        model.addAttribute("user", user);
+        model.addAttribute(new Expense());
+
 
         return "user/add-expense";
     }
 
-    @RequestMapping(value = "add-expense", method = RequestMethod.POST)
-    public String processAddExpense(Model model, @ModelAttribute @Valid AddUserExpenseForm form,
-                                    Errors errors){
+    @RequestMapping(value="add-expense", method = RequestMethod.POST)
+    public String processAddForm(Model model, @RequestParam String categoryName, HttpSession httpSession,
+                                 @ModelAttribute @Valid Expense expense, Errors errors){
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
 
         if(errors.hasErrors()){
-            model.addAttribute("form", form);
-            return "user/add-expense";
+            model.addAttribute("title", "Add Category");
+            return "category/add-expense";
         }
 
-        Expense expense = expenseDao.findById(form.getExpenseId()).get();
-        User user = userDao.findById(form.getUserId()).get();
+        Category category = new Category(categoryName);
+        categoryDao.save(category);
+
+        expense.setCategory(category);
+
+        expenseDao.save(expense);
+
         user.addItem(expense);
+
         userDao.save(user);
 
-        return "redirect:/home/view/" + user.getId();
+
+        return "redirect:add-expense";
+
     }
 
 }
 
-//    @RequestMapping(value = "home", method = RequestMethod.GET)
-//    public String displayHome(Model model, HttpSession httpSession){
+//    @RequestMapping(value = "add-expense", method = RequestMethod.GET)
+//    public String displayAddExpense(Model model, HttpSession httpSession){
 //
 //        Object userInSession = httpSession.getAttribute("user");
+//        User user = userDao.findByUserName(userInSession.toString());
 //
-//        if(userInSession == null){
-//            return "redirect:login";
-//        }
+//        AddUserExpenseForm form = new AddUserExpenseForm(expenseDao.findAll(), user);
 //
-//        model.addAttribute("userName", userInSession);
+//        model.addAttribute("form", form);
 //
-//        return "home/index";
-//
+//        return "user/add-expense";
 //    }
 //
-//    @RequestMapping(value = "home", method = RequestMethod.POST)
-//    public String processHome(Model model, HttpSession httpSession){
+//    @RequestMapping(value = "add-expense", method = RequestMethod.POST)
+//    public String processAddExpense(Model model, @ModelAttribute @Valid AddUserExpenseForm form,
+//                                    Errors errors){
 //
-//        Object userInSession = httpSession.getAttribute("user");
-//
-//        if(userInSession == null){
-//            return "redirect:login";
+//        if(errors.hasErrors()){
+//            model.addAttribute("form", form);
+//            return "user/add-expense";
 //        }
 //
-//        model.addAttribute("userName", userInSession);
+//        Expense expense = expenseDao.findById(form.getExpenseId()).get();
+//        User user = userDao.findById(form.getUserId()).get();
+//        user.addItem(expense);
+//        userDao.save(user);
 //
-//        return "home/index";
-//
+//        return "redirect:/home/view/" + user.getId();
 //    }
