@@ -1,7 +1,9 @@
 package MoneyManager.controllers;
 
 import MoneyManager.models.Category;
+import MoneyManager.models.User;
 import MoneyManager.models.data.CategoryDao;
+import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ public class CategoryController {
     @Autowired
     private CategoryDao categoryDao;
 
+    @Autowired
+    private UserDao userDao;
+
     @RequestMapping(value="add", method = RequestMethod.GET)
     public String displayAddForm(Model model, HttpSession httpSession){
 
@@ -37,7 +42,11 @@ public class CategoryController {
     }
 
     @RequestMapping(value="add", method = RequestMethod.POST)
-    public String processAddForm(Model model, @ModelAttribute @Valid Category category, Errors errors){
+    public String processAddForm(Model model, @ModelAttribute @Valid Category category, Errors errors,
+                                 HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
 
         if(errors.hasErrors()){
             model.addAttribute("title", "Add Category");
@@ -45,6 +54,8 @@ public class CategoryController {
         }
 
         categoryDao.save(category);
+        user.addCategory(category);
+        userDao.save(user);
 
         return "redirect:/user/add-expense";
 

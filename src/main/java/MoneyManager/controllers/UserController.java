@@ -155,7 +155,6 @@ public class UserController {
 
         model.addAttribute("title", "Add Category");
         model.addAttribute("user", user);
-        model.addAttribute("categories", categoryDao.findAll());
         model.addAttribute(new Expense());
         model.addAttribute(new Category());
 
@@ -184,6 +183,7 @@ public class UserController {
         expenseDao.save(expense);
 
         user.addItem(expense);
+        user.addCategory(category);
 
         userDao.save(user);
 

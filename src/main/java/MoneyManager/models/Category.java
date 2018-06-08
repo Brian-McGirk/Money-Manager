@@ -23,6 +23,9 @@ public class Category {
     @JoinColumn(name = "category_id")
     private List<Expense> expenses = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "categories")
+    private List<User> users;
+
     public Category(String name){
         this.name = name;
     }

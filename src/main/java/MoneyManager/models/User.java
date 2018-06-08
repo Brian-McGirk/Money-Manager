@@ -31,6 +31,9 @@ public class User {
     @ManyToMany
     private List<Expense> expenses;
 
+    @ManyToMany
+    private List<Category> categories;
+
     public User() {}
 
     public int getId() {
@@ -78,8 +81,12 @@ public class User {
         expenses.add(item);
     }
 
+    public List<Category> getCategories() { return categories; }
 
-//    private void checkPassword(){
+    public void addCategory(Category category){categories.add(category);}
+
+
+    //    private void checkPassword(){
 //        if(this.password != null && this.verifyPassword != null && !this.password.equals(this.verifyPassword)){
 //            this.verifyPassword = null;
 //        }

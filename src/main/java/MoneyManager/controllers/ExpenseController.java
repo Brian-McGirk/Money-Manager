@@ -3,8 +3,10 @@ package MoneyManager.controllers;
 
 import MoneyManager.models.Category;
 import MoneyManager.models.Expense;
+import MoneyManager.models.User;
 import MoneyManager.models.data.CategoryDao;
 import MoneyManager.models.data.ExpenseDao;
+import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,9 @@ public class ExpenseController {
 
     @Autowired
     private CategoryDao categoryDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     private ExpenseDao expenseDao;
@@ -49,8 +54,10 @@ public class ExpenseController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddForm(Model model, @ModelAttribute @Valid Expense expense, Errors errors,
-                                 @RequestParam int categoryId){
+                                 @RequestParam int categoryId, HttpSession httpSession){
 
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
 
         if(errors.hasErrors()){
             model.addAttribute("title", "Expense");
@@ -64,6 +71,8 @@ public class ExpenseController {
         expense.setCategory(category);
 
         expenseDao.save(expense);
+        user.addItem(expense);
+        userDao.save(user);
 
 
         return "redirect:/user/add-expense";
