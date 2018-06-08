@@ -147,11 +147,14 @@ public class UserController {
     public String displayAddForm(Model model, HttpSession httpSession){
 
         Object userInSession = httpSession.getAttribute("user");
-        User user = userDao.findByUserName(userInSession.toString());
 
         if(userInSession == null){
             return "redirect:/user/login";
         }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+
 
         model.addAttribute("title", "Add Category");
         model.addAttribute("user", user);
@@ -168,7 +171,6 @@ public class UserController {
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
-
 
         if(errors.hasErrors()){
             model.addAttribute("title", "Add Category");
