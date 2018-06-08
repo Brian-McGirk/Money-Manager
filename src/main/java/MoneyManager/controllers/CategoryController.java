@@ -41,12 +41,12 @@ public class CategoryController {
 
         if(errors.hasErrors()){
             model.addAttribute("title", "Add Category");
-            return "category/add";
+            return "/user/add-expense";
         }
 
         categoryDao.save(category);
 
-        return "redirect:add";
+        return "redirect:/user/add-expense";
 
     }
 

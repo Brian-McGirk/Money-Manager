@@ -66,7 +66,7 @@ public class ExpenseController {
         expenseDao.save(expense);
 
 
-        return "redirect:add";
+        return "redirect:/user/add-expense";
 
     }
 
