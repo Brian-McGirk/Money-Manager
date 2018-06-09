@@ -16,42 +16,46 @@
     <div class="col-md-8">
 
         <h3>Expense:</h3>
-        <table>
-            <tr class="table-column">
-                <!--<th>Date</th>-->
-                <th>Expense</th>
-                <th>Weekly Cost</th>
-                <th>Monthly Cost</th>
-            </tr>
-            <tr th:each="expense : ${user.expenses}">
-                <!--<td th:text="${expense.date}"></td>-->
-                <td th:text="${expense.name}"></td>
-                <td th:text="'$ ' + ${expense.weeklyCost}"></td>
-                <td th:text="'$ ' + ${expense.monthlyCost}"></td>
-                <!--<td th:text="${expense.category.name}"></td>-->
-            </tr>
 
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <tr class="table-column">
+                    <!--<th>Date</th>-->
+                    <th>Expense</th>
+                    <th>Weekly Cost</th>
+                    <th>Monthly Cost</th>
+                </tr>
+                <tr th:each="expense : ${user.expenses}">
+                    <!--<td th:text="${expense.date}"></td>-->
+                    <td th:text="${expense.name}"></td>
+                    <td th:text="'$ ' + ${expense.weeklyCost}"></td>
+                    <td th:text="'$ ' + ${expense.monthlyCost}"></td>
+                    <!--<td th:text="${expense.category.name}"></td>-->
+                </tr>
+
+            </table>
+        </div>
 
     </div>
 
     <div class="col-md-4">
 
         <h3>Income:</h3>
-        <table>
-            <tr class="table-column">
-                <th>Source</th>
-                <th>Weekly</th>
-                <th>Monthly</th>
-            </tr>
-            <tr th:each="income : ${user.incomes}">
-                <td th:text="${income.source}"></td>
-                <td th:text="'$ ' + ${income.weeklyAmount}"></td>
-                <td th:text="'$ ' + ${income.monthlyAmount}"></td>
-            </tr>
+        <div class="table-wrapper">
+            <table>
+                <tr class="table-column">
+                    <th>Source</th>
+                    <th>Weekly</th>
+                    <th>Monthly</th>
+                </tr>
+                <tr th:each="income : ${user.incomes}">
+                    <td th:text="${income.source}"></td>
+                    <td th:text="'$ ' + ${income.weeklyAmount}"></td>
+                    <td th:text="'$ ' + ${income.monthlyAmount}"></td>
+                </tr>
 
-        </table>
-
+            </table>
+        </div>
     </div>
 
 

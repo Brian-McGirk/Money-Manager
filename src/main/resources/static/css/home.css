@@ -4,9 +4,16 @@ table, th, td{
 
 table{
     width: 100%;
+
 }
 
 .table-column{
     border: 1px solid black;
     background-color: #dddddd;
+}
+
+.table-wrapper{
+        display: block;
+        overflow-y: auto;
+        height: 200px;
 }
