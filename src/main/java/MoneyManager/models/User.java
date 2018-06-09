@@ -34,6 +34,9 @@ public class User {
     @ManyToMany
     private List<Category> categories;
 
+    @ManyToMany
+    private List<Income> incomes;
+
     public User() {}
 
     public int getId() {
@@ -85,6 +88,9 @@ public class User {
 
     public void addCategory(Category category){categories.add(category);}
 
+    public List<Income> getIncomes() { return incomes; }
+
+    public void addIncome(Income income){incomes.add(income);}
 
     //    private void checkPassword(){
 //        if(this.password != null && this.verifyPassword != null && !this.password.equals(this.verifyPassword)){

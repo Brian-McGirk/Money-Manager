@@ -1,3 +1,7 @@
 .marginUnderNavBar{
     margin-top: 75px;
 }
+
+.error{
+    color: red;
+}
