@@ -79,6 +79,16 @@ public class Expense {
         this.monthlyCost = weeklyCost * 4;
     }
 
+    public double calcMonthlyTotal(Iterable<Expense> expenses){
+        double monthlyExpenseTotal = 0;
+
+        for(Expense expense : expenses){
+            monthlyExpenseTotal += expense.getMonthlyCost();
+        }
+
+        return monthlyExpenseTotal;
+    }
+
     //    public String getDate() {
 //        return date;
 //    }

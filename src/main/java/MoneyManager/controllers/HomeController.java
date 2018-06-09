@@ -1,5 +1,7 @@
 package MoneyManager.controllers;
 
+import MoneyManager.models.Expense;
+import MoneyManager.models.Income;
 import MoneyManager.models.User;
 import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +24,16 @@ public class HomeController {
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
-
+        Expense expense = new Expense();
+        Income income = new Income();
 
         if(userInSession == null){
             return "redirect:user/login";
         }
 
-        model.addAttribute("userName", userInSession);
+
+        model.addAttribute("monthlyExpenseTotal", expense.calcMonthlyTotal(user.getExpenses()));
+        model.addAttribute("monthlyIncomeTotal", income.calcMonthlyTotal(user.getIncomes()));
         model.addAttribute("user", user);
 
         return "home/index";

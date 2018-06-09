@@ -65,4 +65,15 @@ public class Income {
     public void calcMonthlyAmount(double weeklyAmount){
         this.monthlyAmount = weeklyAmount * 4;
     }
+
+    public double calcMonthlyTotal(Iterable<Income> incomes){
+        double monthlyIncomeTotal = 0;
+
+        for(Income income : incomes){
+            monthlyIncomeTotal += income.getMonthlyAmount();
+        }
+
+        return monthlyIncomeTotal;
+    }
+
 }

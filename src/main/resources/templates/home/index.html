@@ -34,10 +34,16 @@
                     <!--<td th:text="${expense.category.name}"></td>-->
                 </tr>
 
+                <tr>
+                    <td class="table-column" colspan="2">Total Monthly Expenses:</td>
+                    <td th:text="'$ ' + ${monthlyExpenseTotal}"></td>
+                </tr>
+
+
             </table>
         </div>
 
-        <p class="new-user" th:unless="${user.expenses.size()}">Add some expenses to get started!</p>
+        <p class="new-user" th:unless="${user.expenses.size()}">Add your expenses to get started!</p>
 
 
     </div>
@@ -56,6 +62,11 @@
                     <td th:text="${income.source}"></td>
                     <td th:text="'$ ' + ${income.weeklyAmount}"></td>
                     <td th:text="'$ ' + ${income.monthlyAmount}"></td>
+                </tr>
+
+                <tr>
+                    <td class="table-column" colspan="2">Total Monthly Income:</td>
+                    <td th:text="'$ ' + ${monthlyIncomeTotal}"></td>
                 </tr>
 
             </table>
