@@ -62,6 +62,8 @@ public class IncomeController {
             return "/income/add";
         }
 
+        income.calcMonthlyAmount(income.getWeeklyAmount());
+
         incomeDao.save(income);
 
         user.addIncome(income);

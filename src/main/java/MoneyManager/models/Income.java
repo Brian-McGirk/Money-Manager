@@ -23,7 +23,11 @@ public class Income {
 
     @NotNull
     @DecimalMin("0.00")
-    private double amount;
+    private double weeklyAmount;
+
+    @NotNull
+    @DecimalMin("0.00")
+    private double monthlyAmount;
 
     @ManyToMany(mappedBy = "incomes")
     private List<User> users;
@@ -42,11 +46,23 @@ public class Income {
         this.source = source;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getWeeklyAmount() {
+        return weeklyAmount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setWeeklyAmount(double weeklyAmount) {
+        this.weeklyAmount = weeklyAmount;
+    }
+
+    public double getMonthlyAmount() {
+        return monthlyAmount;
+    }
+
+    public void setMonthlyAmount(double monthlyAmount) {
+        this.monthlyAmount = monthlyAmount;
+    }
+
+    public void calcMonthlyAmount(double weeklyAmount){
+        this.monthlyAmount = weeklyAmount * 4;
     }
 }

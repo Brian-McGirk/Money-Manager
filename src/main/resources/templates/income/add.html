@@ -25,9 +25,9 @@
             </div>
 
             <div class="form-group">
-                <label th:for="cost">Income amount</label>
-                <input class="form-control" th:field="*{amount}"/>
-                <span class="error" th:errors="*{amount}" th:text="'Please enter a valid number (i.e. 10.50)'"></span>
+                <label th:for="cost">Weekly income</label>
+                <input class="form-control" th:field="*{weeklyAmount}"/>
+                <span class="error" th:errors="*{weeklyAmount}" th:text="'Please enter a valid number (i.e. 10.50)'"></span>
                 <br>
                 <input type="submit" value="Add income"/>
             </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="col-md-4">
-        <h3>Current expenses:</h3>
+        <h3>Current income:</h3>
 
         <ul>
             <li th:each="income : ${user.incomes}" th:text="${income.source}"></li>
