@@ -29,6 +29,7 @@ public class HomeController {
         }
 
         model.addAttribute("userName", userInSession);
+        model.addAttribute("user", user);
 
         return "home/index";
 

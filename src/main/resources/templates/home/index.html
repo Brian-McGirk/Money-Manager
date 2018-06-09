@@ -16,16 +16,16 @@
 
 <table>
     <tr class="table-column">
-        <th>Category</th>
+        <th>Date</th>
         <th>Expense</th>
         <th>Cost</th>
-        <th>Date</th>
+        <th>Category</th>
     </tr>
-    <tr>
-        <td rowspan="">add category here</td>
-        <td>add expense here</td>
-        <td>add cost here</td>
-        <td>add date here</td>
+    <tr th:each="expense : ${user.expenses}">
+        <td th:text="${expense.date}">add date here</td>
+        <td th:text="${expense.name}">add expense here</td>
+        <td th:text="'$' + ' ' + ${expense.cost}">add cost here</td>
+        <td th:text="${expense.category.name}">add category here</td>
     </tr>
 
 </table>
