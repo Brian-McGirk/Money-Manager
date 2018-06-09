@@ -18,7 +18,7 @@ public class Expense {
 //    private Date date;
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=3, max=15, message = "Expense must be between 3 and 15 characters")
     private String name;
 
     @NotNull

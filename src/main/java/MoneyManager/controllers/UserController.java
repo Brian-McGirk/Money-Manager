@@ -172,9 +172,23 @@ public class UserController {
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
 
+        if(categoryName == null || categoryName.length() > 15 || categoryName.length() < 3){
+            model.addAttribute("categoryNameError", "Category must between 3 and 15 characters");
+            model.addAttribute("title", "Add");
+            model.addAttribute("user", user);
+            model.addAttribute("categoryAndExpenseError", true);
+            model.addAttribute(expense);
+            model.addAttribute(new Category());
+            return "user/add-expense";
+        }
+
         if(errors.hasErrors()){
-            model.addAttribute("title", "Add Category");
-            return "category/add-expense";
+            model.addAttribute("title", "Add");
+            model.addAttribute("user", user);
+            model.addAttribute("categoryAndExpenseError", true);
+            model.addAttribute(expense);
+            model.addAttribute(new Category());
+            return "user/add-expense";
         }
 
         Category category = new Category(categoryName);

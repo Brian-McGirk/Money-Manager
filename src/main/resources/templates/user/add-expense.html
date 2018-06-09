@@ -72,23 +72,24 @@
     </div>
 
     <div class="col-md-4">
-        <form method="post" th:object="${expense}">
+        <form method="post" action="/user/add-expense" th:object="${expense}">
             <h3>Add new category and expense</h3>
             <div class="form-group">
                 <label for="category">Category</label>
                 <input class="form-control" id="category" name="categoryName"/>
+                <span class="error" th:text="${categoryNameError}"></span>
             </div>
 
             <div class="form-group">
                 <label th:for="name">Expense</label>
                 <input class="form-control" th:field="*{name}"/>
-                <span th:errors="*{name}"></span>
+                <span class="error" th:errors="*{name}" th:if="${categoryAndExpenseError}"></span>
             </div>
 
             <div class="form-group">
                 <label th:for="cost">Cost</label>
                 <input class="form-control" th:field="*{cost}"/>
-                <span th:errors="*{cost}"></span>
+                <span class="error" th:errors="*{cost}" th:if="${categoryAndExpenseError} and 'errors'" th:text="'Please enter a valid number'"></span>
                 <br>
                 <input type="submit" value="Add category and expense"/>
             </div>
