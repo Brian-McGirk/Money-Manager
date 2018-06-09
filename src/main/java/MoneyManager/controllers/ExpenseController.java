@@ -34,23 +34,23 @@ public class ExpenseController {
     @Autowired
     private ExpenseDao expenseDao;
 
-    @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String displayAddForm(Model model, HttpSession httpSession){
-
-        Object userInSession = httpSession.getAttribute("user");
-
-        if(userInSession == null){
-            return "redirect:/user/login";
-        }
-
-        model.addAttribute("title", "Expense");
-        model.addAttribute("expenses", expenseDao.findAll());
-        model.addAttribute("categories", categoryDao.findAll());
-        model.addAttribute(new Expense());
-
-        return "expense/add";
-
-    }
+//    @RequestMapping(value = "add", method = RequestMethod.GET)
+//    public String displayAddForm(Model model, HttpSession httpSession){
+//
+//        Object userInSession = httpSession.getAttribute("user");
+//
+//        if(userInSession == null){
+//            return "redirect:/user/login";
+//        }
+//
+//        model.addAttribute("title", "Expense");
+//        model.addAttribute("expenses", expenseDao.findAll());
+//        model.addAttribute("categories", categoryDao.findAll());
+//        model.addAttribute(new Expense());
+//
+//        return "expense/add";
+//
+//    }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddForm(Model model, @ModelAttribute @Valid Expense expense, Errors errors,
@@ -60,9 +60,12 @@ public class ExpenseController {
         User user = userDao.findByUserName(userInSession.toString());
 
         if(errors.hasErrors()){
-            model.addAttribute("title", "Expense");
-            model.addAttribute("expenses", expenseDao.findAll());
-            return "expense/add";
+            model.addAttribute("title", "Add");
+            model.addAttribute("user", user);
+            model.addAttribute(expense);
+            model.addAttribute("expenseError", true);
+            model.addAttribute(new Category());
+            return "/user/add-expense";
         }
 
         Optional<Category> categoryObject = categoryDao.findById(categoryId);

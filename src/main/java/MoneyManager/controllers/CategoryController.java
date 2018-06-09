@@ -50,8 +50,8 @@ public class CategoryController {
         User user = userDao.findByUserName(userInSession.toString());
 
         if(errors.hasErrors()){
-            model.addAttribute("title", "Add Category");
-            model.addAttribute("nameError", "Name must be between 3 and 15 characters");
+            model.addAttribute("title", "Add");
+            model.addAttribute("categoryError", "Name must be between 3 and 15 characters");
             model.addAttribute("user", user);
             model.addAttribute(new Expense());
             model.addAttribute(new Category());

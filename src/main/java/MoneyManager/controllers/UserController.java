@@ -156,7 +156,7 @@ public class UserController {
 
 
 
-        model.addAttribute("title", "Add Category");
+        model.addAttribute("title", "Add");
         model.addAttribute("user", user);
         model.addAttribute(new Expense());
         model.addAttribute(new Category());

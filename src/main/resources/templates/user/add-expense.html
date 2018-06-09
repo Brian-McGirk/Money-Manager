@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label th:for="name">Category</label>
                 <input class="form-control" th:field="*{name}"/>
-                <span class="error" th:text="${nameError}"></span>
+                <span class="error" th:text="${categoryError}"></span>
                 <br>
                 <input type="submit" value="Add category"/>
             </div>
@@ -58,13 +58,13 @@
             <div class="form-group">
                 <label th:for="name">Expense</label>
                 <input class="form-control" th:field="*{name}"/>
-                <span th:errors="*{name}"></span>
+                <span class="error" th:errors="*{name}" th:if="${expenseError}"></span>
             </div>
 
             <div class="form-group">
                 <label th:for="cost">Cost</label>
                 <input class="form-control" th:field="*{cost}"/>
-                <span th:errors="*{cost}"></span>
+                <span class="error" th:errors="*{cost}" th:if="${expenseError} and 'errors'" th:text="'Please enter a valid number'"></span>
                 <br>
                 <input type="submit" value="Add expense"/>
             </div>
