@@ -25,6 +25,7 @@
                     <th>Weekly Cost</th>
                     <th>Monthly Cost</th>
                 </tr>
+
                 <tr th:each="expense : ${user.expenses}">
                     <!--<td th:text="${expense.date}"></td>-->
                     <td th:text="${expense.name}"></td>
@@ -35,6 +36,9 @@
 
             </table>
         </div>
+
+        <p class="new-user" th:unless="${user.expenses.size()}">Add some expenses to get started!</p>
+
 
     </div>
 
@@ -56,10 +60,10 @@
 
             </table>
         </div>
+        <p class="new-user" th:unless="${user.incomes.size()}">Add your income to get started!</p>
+
+
     </div>
-
-
-
 </div>
 
 

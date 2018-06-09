@@ -17,3 +17,10 @@ table{
         overflow-y: auto;
         height: 200px;
 }
+
+.new-user{
+    position: relative;
+    left: 20px;
+    top: -150px;
+
+}
