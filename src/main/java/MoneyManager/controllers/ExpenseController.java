@@ -73,6 +73,8 @@ public class ExpenseController {
 
         expense.setCategory(category);
 
+        expense.calcMonthlyCost(expense.getWeeklyCost());
+
         expenseDao.save(expense);
         user.addItem(expense);
         userDao.save(user);

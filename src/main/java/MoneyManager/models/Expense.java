@@ -16,7 +16,7 @@ public class Expense {
     @GeneratedValue
     private int id;
 
-    private String date;
+//    private String date;
 
     @NotNull
     @Size(min=3, max=15, message = "Expense must be between 3 and 15 characters")
@@ -24,7 +24,11 @@ public class Expense {
 
     @NotNull
     @DecimalMin("0.00")
-    private double cost;
+    private double weeklyCost;
+
+    @NotNull
+    @DecimalMin("0.00")
+    private double monthlyCost;
 
     @ManyToOne
     private Category category;
@@ -32,7 +36,7 @@ public class Expense {
     @ManyToMany(mappedBy = "expenses")
     private List<User> users;
 
-    public Expense(){ addDate(); }
+    public Expense(){ }
 
     public int getId() {
         return id;
@@ -46,13 +50,6 @@ public class Expense {
         this.name = name;
     }
 
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
 
     public Category getCategory() {
         return category;
@@ -62,22 +59,42 @@ public class Expense {
         this.category = category;
     }
 
-    public String getDate() {
-        return date;
+    public double getWeeklyCost() {
+        return weeklyCost;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setWeeklyCost(double weeklyCost) {
+        this.weeklyCost = weeklyCost;
     }
 
-    public void addDate(){
-
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(date);
-
-        this.date = dateString;
-
+    public double getMonthlyCost() {
+        return monthlyCost;
     }
+
+    public void setMonthlyCost(double monthlyCost) {
+        this.monthlyCost = monthlyCost;
+    }
+
+    public void calcMonthlyCost(double weeklyCost){
+        this.monthlyCost = weeklyCost * 4;
+    }
+
+    //    public String getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(String date) {
+//        this.date = date;
+//    }
+//
+//    public void addDate(){
+//
+//        Date date = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        String dateString = formatter.format(date);
+//
+//        this.date = dateString;
+//
+//    }
 
 }

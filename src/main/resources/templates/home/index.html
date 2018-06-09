@@ -18,16 +18,17 @@
         <h3>Expense:</h3>
         <table>
             <tr class="table-column">
-                <th>Date</th>
+                <!--<th>Date</th>-->
                 <th>Expense</th>
-                <th>Cost</th>
-                <th>Category</th>
+                <th>Weekly Cost</th>
+                <th>Monthly Cost</th>
             </tr>
             <tr th:each="expense : ${user.expenses}">
-                <td th:text="${expense.date}"></td>
+                <!--<td th:text="${expense.date}"></td>-->
                 <td th:text="${expense.name}"></td>
-                <td th:text="'$' + ' ' + ${expense.cost}"></td>
-                <td th:text="${expense.category.name}"></td>
+                <td th:text="'$ ' + ${expense.weeklyCost}"></td>
+                <td th:text="'$ ' + ${expense.monthlyCost}"></td>
+                <!--<td th:text="${expense.category.name}"></td>-->
             </tr>
 
         </table>
@@ -40,7 +41,7 @@
         <table>
             <tr class="table-column">
                 <th>Source</th>
-                <th>Amount</th>
+                <th>Weekly</th>
                 <th>Monthly</th>
             </tr>
             <tr th:each="income : ${user.incomes}">

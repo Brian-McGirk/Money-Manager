@@ -191,6 +191,7 @@ public class UserController {
         categoryDao.save(category);
 
         expense.setCategory(category);
+        expense.calcMonthlyCost(expense.getWeeklyCost());
 
         expenseDao.save(expense);
 
