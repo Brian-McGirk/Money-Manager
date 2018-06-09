@@ -22,5 +22,8 @@ table{
     position: relative;
     left: 20px;
     top: -150px;
+}
 
+.summary, th{
+    text-align: center;
 }

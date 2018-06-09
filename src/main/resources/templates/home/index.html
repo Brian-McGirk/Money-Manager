@@ -35,7 +35,7 @@
                 </tr>
                 <tr th:unless="${user.expenses.size() >= 9}">
                     <td class="table-column" colspan="2">Total Monthly Expenses:</td>
-                    <td th:text="'$ ' + ${monthlyExpenseTotal}"></td>
+                    <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
                 </tr>
 
             </table>
@@ -44,7 +44,7 @@
         <table th:if="${user.expenses.size() >= 9}">
             <tr>
                 <td class="table-column" colspan="2">Total Monthly Expenses:</td>
-                <td th:text="'$ ' + ${monthlyExpenseTotal}"></td>
+                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
             </tr>
         </table>
 
@@ -71,7 +71,7 @@
 
                 <tr th:unless="${user.incomes.size() >= 9}">
                     <td class="table-column" colspan="2">Total Monthly Income:</td>
-                    <td th:text="'$ ' + ${monthlyIncomeTotal}"></td>
+                    <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>
                 </tr>
 
 
@@ -81,14 +81,56 @@
         <table th:if="${user.incomes.size() >= 9}">
             <tr>
                 <td class="table-column" colspan="2">Total Monthly Income:</td>
-                <td th:text="'$ ' + ${monthlyIncomeTotal}"></td>
+                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>
             </tr>
         </table>
 
         <p class="new-user" th:unless="${user.incomes.size()}">Add your income to get started!</p>
 
-
     </div>
+</div>
+
+<br>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h3 class="summary">Annual summary</h3>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+        <table>
+            <tr class="table-column">
+                <th>Total Net Income</th>
+                <th>Total Expenses</th>
+                <th>Balance</th>
+            </tr>
+            <tr>
+                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal * 12, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal * 12, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal * 12 - monthlyExpenseTotal * 12, 0, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-2"></div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <p class="summary"> If your balance is a positive number, you can
+            add the extra money to your savings. If your <br> expenses exceed your income, you’ll need to make
+            some adjustments to get back into the positive.</p>
+    </div>
+    <div class="col-md-2"></div>
 </div>
 
 
