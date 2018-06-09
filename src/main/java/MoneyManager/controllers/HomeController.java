@@ -1,5 +1,6 @@
 package MoneyManager.controllers;
 
+import MoneyManager.models.User;
 import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ public class HomeController {
     public String displayHome(Model model, HttpSession httpSession){
 
         Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
 
         if(userInSession == null){
             return "redirect:user/login";

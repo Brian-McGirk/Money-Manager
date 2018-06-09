@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Expense {
     @GeneratedValue
     private int id;
 
-//    private Date date;
+    private String date;
 
     @NotNull
     @Size(min=3, max=15, message = "Expense must be between 3 and 15 characters")
@@ -31,7 +32,7 @@ public class Expense {
     @ManyToMany(mappedBy = "expenses")
     private List<User> users;
 
-    public Expense(){}
+    public Expense(){ addDate(); }
 
     public int getId() {
         return id;
@@ -61,11 +62,25 @@ public class Expense {
         this.category = category;
     }
 
-//    public Date getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(Date date) {
-//        this.date = date;
-//    }
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void addDate(){
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(date);
+
+        this.date = dateString;
+
+    }
+
+
+
+
 }
