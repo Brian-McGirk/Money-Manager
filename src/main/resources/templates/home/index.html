@@ -33,15 +33,20 @@
                     <td th:text="'$ ' + ${expense.monthlyCost}"></td>
                     <!--<td th:text="${expense.category.name}"></td>-->
                 </tr>
-
-                <tr>
+                <tr th:unless="${user.expenses.size() >= 9}">
                     <td class="table-column" colspan="2">Total Monthly Expenses:</td>
                     <td th:text="'$ ' + ${monthlyExpenseTotal}"></td>
                 </tr>
 
-
             </table>
         </div>
+
+        <table th:if="${user.expenses.size() >= 9}">
+            <tr>
+                <td class="table-column" colspan="2">Total Monthly Expenses:</td>
+                <td th:text="'$ ' + ${monthlyExpenseTotal}"></td>
+            </tr>
+        </table>
 
         <p class="new-user" th:unless="${user.expenses.size()}">Add your expenses to get started!</p>
 
@@ -64,13 +69,22 @@
                     <td th:text="'$ ' + ${income.monthlyAmount}"></td>
                 </tr>
 
-                <tr>
+                <tr th:unless="${user.incomes.size() >= 9}">
                     <td class="table-column" colspan="2">Total Monthly Income:</td>
                     <td th:text="'$ ' + ${monthlyIncomeTotal}"></td>
                 </tr>
 
+
             </table>
         </div>
+
+        <table th:if="${user.incomes.size() >= 9}">
+            <tr>
+                <td class="table-column" colspan="2">Total Monthly Income:</td>
+                <td th:text="'$ ' + ${monthlyIncomeTotal}"></td>
+            </tr>
+        </table>
+
         <p class="new-user" th:unless="${user.incomes.size()}">Add your income to get started!</p>
 
 
