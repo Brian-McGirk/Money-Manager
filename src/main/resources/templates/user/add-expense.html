@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label th:for="name">Category</label>
                 <input class="form-control" th:field="*{name}"/>
-                <span th:errors="*{name}"></span>
+                <span class="error" th:text="${nameError}"></span>
                 <br>
                 <input type="submit" value="Add category"/>
             </div>
