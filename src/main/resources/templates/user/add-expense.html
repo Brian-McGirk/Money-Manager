@@ -107,10 +107,10 @@
     </div>
 
     <div class="col-md-4">
-        <h3>Current expenses:</h3>
+        <h3>Current weekly expenses:</h3>
 
         <ul>
-            <li th:each="expense : ${user.expenses}" th:text="${expense.name}"></li>
+            <li th:each="expense : ${user.expenses}" th:unless="${expense.dailyCost > 0}" th:text="${expense.name}"></li>
         </ul>
     </div>
 

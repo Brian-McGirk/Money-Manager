@@ -116,7 +116,9 @@ public class ExpenseController {
             model.addAttribute("title", "Add Daily Expense");
             model.addAttribute("user", user);
             model.addAttribute(expense);
-            return "expense/add-daily";
+            model.addAttribute("dailyExpenseTotal", expense.calcDailyTotal(user.getExpenses()));
+            model.addAttribute("numberOfDailyExpenses", expense.getNumberOfDailyExpense(user.getExpenses()));
+            return "expense/viewDaily";
         }
 
 
@@ -128,7 +130,7 @@ public class ExpenseController {
         model.addAttribute("title", "Add Daily Expense");
         model.addAttribute("user", user);
 
-        return "expense/add-daily";
+        return "redirect:view-daily";
     }
 
     @RequestMapping(value = "view-daily", method = RequestMethod.GET)
@@ -144,7 +146,8 @@ public class ExpenseController {
         Expense expense = new Expense();
 
         model.addAttribute("user", user);
-        model.addAttribute("dailyExpense", expense.getNumberOfDailyExpense(user.getExpenses()));
+        model.addAttribute(expense);
+        model.addAttribute("numberOfDailyExpenses", expense.getNumberOfDailyExpense(user.getExpenses()));
         model.addAttribute("dailyExpenseTotal", expense.calcDailyTotal(user.getExpenses()));
 
         return "expense/viewDaily";

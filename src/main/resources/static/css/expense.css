@@ -14,9 +14,24 @@ table{
 .table-wrapper{
         display: block;
         overflow-y: auto;
-        height: 400px;
+        height: 350px;
 }
 
 .date-shorten{
     width: 35%;
 }
+
+.errors{
+    position: absolute;
+    top: 20px;
+}
+
+.expense-form{
+    margin-top: 50px;
+}
+
+.cost{
+    margin-left: 20px;
+}
+
+
