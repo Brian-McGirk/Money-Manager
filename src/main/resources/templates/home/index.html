@@ -70,7 +70,7 @@
                     <td th:unless="${income.weeklyAmount == 0}" th:text="'$ ' + ${income.monthlyAmount}"></td>
                 </tr>
 
-                <tr th:unless="${user.incomes.size() >= 9}">
+                <tr th:unless="${user.incomes.size() - numberOfDailyIncomes >= 9}">
                     <td class="table-column" colspan="2">Total Monthly Income:</td>
                     <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>
                 </tr>
@@ -79,7 +79,7 @@
             </table>
         </div>
 
-        <table th:if="${user.incomes.size() >= 9}">
+        <table th:if="${user.incomes.size() - numberOfDailyIncomes >= 9}">
             <tr>
                 <td class="table-column" colspan="2">Total Monthly Income:</td>
                 <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>

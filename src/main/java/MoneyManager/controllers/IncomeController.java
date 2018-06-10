@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -118,6 +119,36 @@ public class IncomeController {
         model.addAttribute("dailyIncomeTotal", income.calcDailyAmount(user.getIncomes()));
 
         return "income/viewDaily";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String displayRemoveIncomeForm(Model model, HttpSession httpSession) {
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        model.addAttribute("user", user);
+        model.addAttribute("title", "Remove Incomes");
+        return "income/remove";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveIncomeForm(@RequestParam(required = false) int[] incomeIds) {
+
+        if(incomeIds == null){
+            return "redirect:/home";
+        }
+
+        for (int incomeId : incomeIds) {
+            incomeDao.deleteById(incomeId);
+        }
+
+        return "redirect:/home";
     }
 
 

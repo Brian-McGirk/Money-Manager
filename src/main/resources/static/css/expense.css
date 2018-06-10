@@ -38,4 +38,9 @@ table{
     width: 30%;
 }
 
+.remove-button{
+    position: absolute;
+    right: 20px;
+}
+
 

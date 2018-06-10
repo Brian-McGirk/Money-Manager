@@ -18,4 +18,6 @@ label{
     font-weight: normal;
 }
 
-
+.remove-button{
+    float: right;
+}

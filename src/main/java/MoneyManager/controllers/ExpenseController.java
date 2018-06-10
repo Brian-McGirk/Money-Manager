@@ -154,7 +154,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String displayRemoveCheeseForm(Model model, HttpSession httpSession) {
+    public String displayRemoveExpenseForm(Model model, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
@@ -170,7 +170,7 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveCheeseForm(@RequestParam(required = false) int[] expenseIds) {
+    public String processRemoveExpenseForm(@RequestParam(required = false) int[] expenseIds) {
 
         if(expenseIds == null){
             return "redirect:/home";

@@ -38,6 +38,7 @@ public class HomeController {
         model.addAttribute("dailyExpenseTotal", expense.calcDailyTotal(user.getExpenses()));
         model.addAttribute("dailyIncomeTotal", income.calcDailyAmount(user.getIncomes()));
         model.addAttribute("numberOfDailyExpenses", expense.getNumberOfDailyExpense(user.getExpenses()));
+        model.addAttribute("numberOfDailyIncomes", income.getNumberOfDailyIncome(user.getIncomes()));
         model.addAttribute("user", user);
 
 
