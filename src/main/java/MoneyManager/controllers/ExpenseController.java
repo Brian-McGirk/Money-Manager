@@ -153,5 +153,35 @@ public class ExpenseController {
         return "expense/viewDaily";
     }
 
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String displayRemoveCheeseForm(Model model, HttpSession httpSession) {
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        model.addAttribute("user", user);
+        model.addAttribute("title", "Remove Expenses");
+        return "expense/remove";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveCheeseForm(@RequestParam(required = false) int[] expenseIds) {
+
+        if(expenseIds == null){
+            return "redirect:/home";
+        }
+
+        for (int expenseId : expenseIds) {
+            expenseDao.deleteById(expenseId);
+        }
+
+        return "redirect:/home";
+    }
+
 
 }

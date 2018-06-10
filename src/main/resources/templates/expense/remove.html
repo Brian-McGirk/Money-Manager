@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head >
+
+    <div th:replace="fragments :: head"></div>
+    <div th:replace="fragments :: navBarMargin"></div>
+    <link rel="stylesheet" th:href="@{/css/removeExpense.css}" />
+
+</head>
+
+<body class="container marginUnderNavBar">
+
+<div th:replace="fragments:: navigation"></div>
+
+<div class="row">
+    <div class="col-md-6">
+
+        <form method="post">
+
+            <!--<div th:each="expense : ${user.expenses}" class="checkbox">-->
+                <!--<input type="checkbox" name="expenseIds" th:value="${expense.id}" th:id="${expense.id}"/>-->
+                <!--<label th:for="${expense.id}" th:text="${expense.name}"></label>-->
+                <!--<br />-->
+            <!--</div>-->
+
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Date added</th>
+                        <th>Expense</th>
+                        <th>Frequency</th>
+                    </tr>
+
+                    <tr th:each="expense : ${user.expenses}" >
+                        <td th:text="${expense.date}"></td>
+                        <td><input type="checkbox" name="expenseIds" th:value="${expense.id}" th:id="${expense.id}"/>
+                            <label th:for="${expense.id}" th:text="${expense.name}"></label></td>
+                        <td th:unless="${expense.weeklyCost > 0}" th:text="Daily"></td>
+                        <td th:if="${expense.weeklyCost > 0}" th:text="Weekly"></td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <input class="remove-button" type="submit" value="Remove Expenses" />
+
+            <br>
+
+            </form>
+
+
+    </div>
+</div>
+
+</body>
+</html>
