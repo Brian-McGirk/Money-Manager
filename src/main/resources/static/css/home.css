@@ -23,6 +23,6 @@ table{
     top: -150px;
 }
 
-.header-align, th{
+.header-align, .summary, th{
     text-align: center;
 }
