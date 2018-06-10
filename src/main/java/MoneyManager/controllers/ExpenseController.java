@@ -85,24 +85,24 @@ public class ExpenseController {
 
     }
 
-    @RequestMapping(value = "add-daily-expense", method = RequestMethod.GET)
-    public String displayDailyAddForm(Model model, HttpSession httpSession){
-
-        Object userInSession = httpSession.getAttribute("user");
-
-        if(userInSession == null){
-            return "redirect:/user/login";
-        }
-
-        User user = userDao.findByUserName(userInSession.toString());
-
-
-        model.addAttribute("title", "Add Daily Expense");
-        model.addAttribute("user", user);
-        model.addAttribute(new Expense());
-
-        return "expense/add-daily";
-    }
+//    @RequestMapping(value = "add-daily-expense", method = RequestMethod.GET)
+//    public String displayDailyAddForm(Model model, HttpSession httpSession){
+//
+//        Object userInSession = httpSession.getAttribute("user");
+//
+//        if(userInSession == null){
+//            return "redirect:/user/login";
+//        }
+//
+//        User user = userDao.findByUserName(userInSession.toString());
+//
+//
+//        model.addAttribute("title", "Add Daily Expense");
+//        model.addAttribute("user", user);
+//        model.addAttribute(new Expense());
+//
+//        return "expense/add-daily";
+//    }
 
 
     @RequestMapping(value = "add-daily-expense", method = RequestMethod.POST)

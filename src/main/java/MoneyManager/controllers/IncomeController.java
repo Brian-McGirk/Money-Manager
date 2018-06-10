@@ -72,5 +72,53 @@ public class IncomeController {
         return "redirect:/income/add";
     }
 
+    @RequestMapping(value = "add-daily-income", method = RequestMethod.POST)
+    public String processDailyAddForm(Model model, @ModelAttribute @Valid Income income,
+                                      Errors errors, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
+        if(errors.hasErrors()){
+            model.addAttribute("title", "Add Daily Expense");
+            model.addAttribute("user", user);
+            model.addAttribute(income);
+            model.addAttribute("dailyIncomesTotal", income.calcDailyAmount(user.getIncomes()));
+            model.addAttribute("numberOfDailyIncomes", income.getNumberOfDailyIncome(user.getIncomes()));
+            return "income/viewDaily";
+        }
+
+
+
+        incomeDao.save(income);
+        user.addIncome(income);
+        userDao.save(user);
+
+        model.addAttribute("title", "Add Daily Expense");
+        model.addAttribute("user", user);
+
+        return "redirect:view-daily";
+    }
+
+    @RequestMapping(value = "view-daily", method = RequestMethod.GET)
+    public String viewDailyExpense(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+        Income income = new Income();
+
+        model.addAttribute("user", user);
+        model.addAttribute(income);
+        model.addAttribute("numberOfDailyIncomes", income.getNumberOfDailyIncome(user.getIncomes()));
+        model.addAttribute("dailyIncomeTotal", income.calcDailyAmount(user.getIncomes()));
+
+        return "income/viewDaily";
+    }
+
 
 }

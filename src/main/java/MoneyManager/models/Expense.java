@@ -16,6 +16,7 @@ public class Expense {
     @GeneratedValue
     private int id;
 
+    @NotNull
     private String date;
 
     @NotNull
@@ -25,10 +26,6 @@ public class Expense {
     @NotNull
     @DecimalMin("0.00")
     private double dailyCost;
-
-    @NotNull
-    @DecimalMin("0.00")
-    private double totalDailyCost;
 
     @NotNull
     @DecimalMin("0.00")
@@ -105,13 +102,6 @@ public class Expense {
         this.dailyCost = dailyCost;
     }
 
-    public double getTotalDailyCost() {
-        return totalDailyCost;
-    }
-
-    public void setTotalDailyCost(double totalDailyCost) {
-        this.totalDailyCost = totalDailyCost;
-    }
 
     public String getDate() {
         return date;

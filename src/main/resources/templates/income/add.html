@@ -39,7 +39,7 @@
             <h3>Current income:</h3>
 
             <ul>
-                <li th:each="income : ${user.incomes}" th:text="${income.source}"></li>
+                <li th:each="income : ${user.incomes}" th:text="${income.source}" th:unless="${income.weeklyAmount == 0}"></li>
             </ul>
         </div>
     <div class="col-md-2"></div>

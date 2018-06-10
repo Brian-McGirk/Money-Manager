@@ -22,7 +22,7 @@
 
                     <tr class="table-column">
                         <th class="date-shorten">Date</th>
-                        <th>Item</th>
+                        <th class="item-lengthen">Item</th>
                         <th>Cost</th>
                     </tr>
 
@@ -38,7 +38,7 @@
 
                     </tr>
                     <tr th:unless="${numberOfDailyExpenses >= 16}">
-                        <td class="table-column" colspan="2">Total expenses:</td>
+                        <td class="table-column" colspan="2">Total daily expenses:</td>
                         <td th:text="'$ ' + ${#numbers.formatDecimal(dailyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
                     </tr>
 
@@ -46,7 +46,7 @@
             </div>
             <table th:if="${numberOfDailyExpenses >= 16}">
                 <tr>
-                    <td class="table-column" colspan="2">Total expenses:</td>
+                    <td class="table-column" colspan="2">Total daily expenses:</td>
                     <td th:text="'$ ' + ${#numbers.formatDecimal(dailyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
                 </tr>
             </table>
