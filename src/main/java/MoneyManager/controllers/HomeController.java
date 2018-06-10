@@ -36,6 +36,7 @@ public class HomeController {
         model.addAttribute("monthlyIncomeTotal", income.calcMonthlyTotal(user.getIncomes()));
         model.addAttribute("user", user);
 
+
         return "home/index";
 
     }

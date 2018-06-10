@@ -15,26 +15,26 @@
 <div class="row">
     <div class="col-md-8">
 
-        <h3>Expense:</h3>
+        <h3>Weekly Expenses:</h3>
 
         <div class="table-wrapper">
             <table>
                 <tr class="table-column">
-                    <!--<th>Date</th>-->
+                    <th>Category</th>
                     <th>Expense</th>
                     <th>Weekly Cost</th>
                     <th>Monthly Cost</th>
                 </tr>
 
                 <tr th:each="expense : ${user.expenses}">
-                    <!--<td th:text="${expense.date}"></td>-->
+                    <td th:text="${expense.category.name}"></td>
                     <td th:text="${expense.name}"></td>
                     <td th:text="'$ ' + ${expense.weeklyCost}"></td>
                     <td th:text="'$ ' + ${expense.monthlyCost}"></td>
-                    <!--<td th:text="${expense.category.name}"></td>-->
+
                 </tr>
                 <tr th:unless="${user.expenses.size() >= 9}">
-                    <td class="table-column" colspan="2">Total Monthly Expenses:</td>
+                    <td class="table-column" colspan="3">Total Monthly Expenses:</td>
                     <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
                 </tr>
 
@@ -43,7 +43,7 @@
 
         <table th:if="${user.expenses.size() >= 9}">
             <tr>
-                <td class="table-column" colspan="2">Total Monthly Expenses:</td>
+                <td class="table-column" colspan="3">Total Monthly Expenses:</td>
                 <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
             </tr>
         </table>
@@ -55,7 +55,8 @@
 
     <div class="col-md-4">
 
-        <h3>Income:</h3>
+        <h3>Weekly Income:</h3>
+
         <div class="table-wrapper">
             <table>
                 <tr class="table-column">
