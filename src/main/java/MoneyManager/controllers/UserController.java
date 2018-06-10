@@ -52,7 +52,7 @@ public class UserController {
 
         model.addAttribute(new User());
 
-        return "user/login/index";
+        return "user/login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -63,17 +63,17 @@ public class UserController {
 
         if(userInSession != null && userInSession.equals(user.getUserName())){
             model.addAttribute("nameError", "User already logged in");
-            return "user/login/index";
-        }
+            return "user/login";
+    }
 
         if(errors.hasErrors()){
             model.addAttribute(user);
-            return "user/login/index";
+            return "user/login";
         }
 
         if(findByUserName == null){
             model.addAttribute("nameError", "Username doesn't exist");
-            return "user/login/index";
+            return "user/login";
         }
 
 //        findByUserName.getPassword().equals(user.getPassword())
@@ -84,7 +84,7 @@ public class UserController {
 
         model.addAttribute("passwordError", "Invalid password");
 
-        return "user/login/index";
+        return "user/login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
@@ -92,7 +92,7 @@ public class UserController {
 
         model.addAttribute(new User());
 
-        return "user/register/index";
+        return "user/register";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
@@ -104,7 +104,7 @@ public class UserController {
 
         if(userName){
             model.addAttribute("nameError", "Username already exists");
-            return "user/register/index";
+            return "user/register";
         }
 
 
@@ -114,14 +114,14 @@ public class UserController {
 
         if(errors.hasErrors()){
             model.addAttribute(user);
-            return "user/register/index";
+            return "user/register";
         }
 
 
         if(user.getPassword().equals(user.getVerifyPassword())){
             if(userInSession != null && userInSession.equals(user.getUserName())){
                 model.addAttribute("nameError", "User already logged in");
-                return "user/register/index";
+                return "user/register";
             }
 
             user.setPw_hash(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
@@ -135,7 +135,7 @@ public class UserController {
 
 
 
-        return "user/register/index";
+        return "user/register";
     }
 
     @RequestMapping(value = "edit")
