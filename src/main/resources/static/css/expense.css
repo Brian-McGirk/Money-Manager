@@ -14,15 +14,9 @@ table{
 .table-wrapper{
         display: block;
         overflow-y: auto;
-        height: 200px;
+        height: 400px;
 }
 
-.new-user{
-    position: relative;
-    left: 20px;
-    top: -150px;
-}
-
-.header-align, th{
-    text-align: center;
+.date-shorten{
+    width: 35%;
 }

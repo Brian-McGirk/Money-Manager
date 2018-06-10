@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-md-8">
 
-        <h3>Weekly Expenses:</h3>
+        <h3>Weekly and Monthly Expenses</h3>
 
         <div class="table-wrapper">
             <table>
@@ -27,10 +27,10 @@
                 </tr>
 
                 <tr th:each="expense : ${user.expenses}">
-                    <td th:text="${expense.category.name}"></td>
-                    <td th:text="${expense.name}"></td>
-                    <td th:text="'$ ' + ${expense.weeklyCost}"></td>
-                    <td th:text="'$ ' + ${expense.monthlyCost}"></td>
+                    <td th:unless="${expense.category == null}" th:text="${expense.category.name}"></td>
+                    <td th:unless="${expense.category == null}" th:text="${expense.name}"></td>
+                    <td th:unless="${expense.category == null}" th:text="'$ ' + ${expense.weeklyCost}"></td>
+                    <td th:unless="${expense.category == null}" th:text="'$ ' + ${expense.monthlyCost}"></td>
 
                 </tr>
                 <tr th:unless="${user.expenses.size() >= 9}">
@@ -55,7 +55,7 @@
 
     <div class="col-md-4">
 
-        <h3>Weekly Income:</h3>
+        <h3>Weekly and Monthly Income</h3>
 
         <div class="table-wrapper">
             <table>
@@ -96,7 +96,7 @@
 <div class="row">
 
     <div class="col-md-12">
-        <h3 class="summary">Annual summary</h3>
+        <h3 class="header-align">Annual summary</h3>
     </div>
 
 </div>
@@ -113,8 +113,8 @@
             </tr>
             <tr>
                 <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal * 12, 0, 'COMMA', 2, 'POINT')}"></td>
-                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal * 12, 0, 'COMMA', 2, 'POINT')}"></td>
-                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal * 12 - monthlyExpenseTotal * 12, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal * 12 + dailyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal * 12 - monthlyExpenseTotal * 12 - dailyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
             </tr>
         </table>
     </div>
@@ -133,10 +133,6 @@
     </div>
     <div class="col-md-2"></div>
 </div>
-
-
-
-
 
 
 </body>

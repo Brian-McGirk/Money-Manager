@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -33,6 +32,8 @@ public class ExpenseController {
 
     @Autowired
     private ExpenseDao expenseDao;
+
+
 
 //    @RequestMapping(value = "add", method = RequestMethod.GET)
 //    public String displayAddForm(Model model, HttpSession httpSession){
@@ -83,5 +84,71 @@ public class ExpenseController {
         return "redirect:/user/add-expense";
 
     }
+
+    @RequestMapping(value = "add-daily-expense", method = RequestMethod.GET)
+    public String displayDailyAddForm(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+
+        model.addAttribute("title", "Add Daily Expense");
+        model.addAttribute("user", user);
+        model.addAttribute(new Expense());
+
+        return "expense/add-daily";
+    }
+
+
+    @RequestMapping(value = "add-daily-expense", method = RequestMethod.POST)
+    public String processDailyAddForm(Model model, @ModelAttribute @Valid Expense expense,
+                                      Errors errors, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
+        if(errors.hasErrors()){
+            model.addAttribute("title", "Add Daily Expense");
+            model.addAttribute("user", user);
+            model.addAttribute(expense);
+            return "expense/add-daily";
+        }
+
+
+
+        expenseDao.save(expense);
+        user.addItem(expense);
+        userDao.save(user);
+
+        model.addAttribute("title", "Add Daily Expense");
+        model.addAttribute("user", user);
+
+        return "expense/add-daily";
+    }
+
+    @RequestMapping(value = "view-daily", method = RequestMethod.GET)
+    public String viewDailyExpense(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+        Expense expense = new Expense();
+
+        model.addAttribute("user", user);
+        model.addAttribute("dailyExpense", expense.getNumberOfDailyExpense(user.getExpenses()));
+        model.addAttribute("dailyExpenseTotal", expense.calcDailyTotal(user.getExpenses()));
+
+        return "expense/viewDaily";
+    }
+
 
 }

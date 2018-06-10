@@ -16,11 +16,19 @@ public class Expense {
     @GeneratedValue
     private int id;
 
-//    private String date;
+    private String date;
 
     @NotNull
     @Size(min=3, max=15, message = "Expense must be between 3 and 15 characters")
     private String name;
+
+    @NotNull
+    @DecimalMin("0.00")
+    private double dailyCost;
+
+    @NotNull
+    @DecimalMin("0.00")
+    private double totalDailyCost;
 
     @NotNull
     @DecimalMin("0.00")
@@ -36,7 +44,7 @@ public class Expense {
     @ManyToMany(mappedBy = "expenses")
     private List<User> users;
 
-    public Expense(){ }
+    public Expense(){ addDate(); }
 
     public int getId() {
         return id;
@@ -89,22 +97,61 @@ public class Expense {
         return monthlyExpenseTotal;
     }
 
-    //    public String getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(String date) {
-//        this.date = date;
-//    }
-//
-//    public void addDate(){
-//
-//        Date date = new Date();
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//        String dateString = formatter.format(date);
-//
-//        this.date = dateString;
-//
-//    }
+    public double getDailyCost() {
+        return dailyCost;
+    }
+
+    public void setDailyCost(double dailyCost) {
+        this.dailyCost = dailyCost;
+    }
+
+    public double getTotalDailyCost() {
+        return totalDailyCost;
+    }
+
+    public void setTotalDailyCost(double totalDailyCost) {
+        this.totalDailyCost = totalDailyCost;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void addDate(){
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(date);
+
+        this.date = dateString;
+
+    }
+
+    public int getNumberOfDailyExpense(Iterable<Expense> expenses){
+
+        int numberOfDailyExpenses = 0;
+
+        for(Expense expense : expenses){
+            if(expense.getDailyCost() != 0){
+                numberOfDailyExpenses++;
+            }
+        }
+
+        return numberOfDailyExpenses;
+    }
+
+    public double calcDailyTotal(Iterable<Expense> expenses){
+        double dailyExpenseTotal = 0;
+
+        for(Expense expense : expenses){
+            dailyExpenseTotal += expense.getDailyCost();
+        }
+
+        return dailyExpenseTotal;
+    }
 
 }

@@ -23,17 +23,19 @@ public class HomeController {
     public String displayHome(Model model, HttpSession httpSession){
 
         Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
         User user = userDao.findByUserName(userInSession.toString());
         Expense expense = new Expense();
         Income income = new Income();
 
-        if(userInSession == null){
-            return "redirect:user/login";
-        }
-
 
         model.addAttribute("monthlyExpenseTotal", expense.calcMonthlyTotal(user.getExpenses()));
         model.addAttribute("monthlyIncomeTotal", income.calcMonthlyTotal(user.getIncomes()));
+        model.addAttribute("dailyExpenseTotal", expense.calcDailyTotal(user.getExpenses()));
         model.addAttribute("user", user);
 
 
@@ -41,14 +43,14 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public String displayView(Model model, @PathVariable int id){
-
-        model.addAttribute("user", userDao.findById(id).get());
-
-        return "home/view";
-
-    }
+//    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
+//    public String displayView(Model model, @PathVariable int id){
+//
+//        model.addAttribute("user", userDao.findById(id).get());
+//
+//        return "home/view";
+//
+//    }
 
 //    @RequestMapping(value = "home", method = RequestMethod.POST)
 //    public String processHome(Model model, HttpSession httpSession){

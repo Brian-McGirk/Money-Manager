@@ -14,33 +14,35 @@
 <div th:replace="fragments :: navigation"></div>
 
 <div class="row">
-    <div class="col-md-6">
-        <form method="post" action="/income/add" th:object="${income}">
-            <h3>Add new income</h3>
+    <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <form method="post" action="/income/add" th:object="${income}">
+                <h3>Add new income</h3>
 
-            <div class="form-group">
-                <label th:for="name">Income source</label>
-                <input class="form-control" th:field="*{source}"/>
-                <span class="error" th:errors="*{source}"></span>
-            </div>
+                <div class="form-group">
+                    <label th:for="name">Income source</label>
+                    <input class="form-control" th:field="*{source}"/>
+                    <span class="error" th:errors="*{source}"></span>
+                </div>
 
-            <div class="form-group">
-                <label th:for="cost">Weekly income (After taxes)</label>
-                <input class="form-control" th:field="*{weeklyAmount}"/>
-                <span class="error" th:errors="*{weeklyAmount}" th:text="'Please enter a valid number (i.e. 10.50)'"></span>
-                <br>
-                <input type="submit" value="Add income"/>
-            </div>
-        </form>
-    </div>
+                <div class="form-group">
+                    <label th:for="cost">Weekly income (After taxes)</label>
+                    <input class="form-control" th:field="*{weeklyAmount}"/>
+                    <span class="error" th:errors="*{weeklyAmount}" th:text="'Please enter a valid number (i.e. 10.50)'"></span>
+                    <br>
+                    <input type="submit" value="Add income"/>
+                </div>
+            </form>
+        </div>
 
-    <div class="col-md-4">
-        <h3>Current income:</h3>
+        <div class="col-md-4">
+            <h3>Current income:</h3>
 
-        <ul>
-            <li th:each="income : ${user.incomes}" th:text="${income.source}"></li>
-        </ul>
-    </div>
+            <ul>
+                <li th:each="income : ${user.incomes}" th:text="${income.source}"></li>
+            </ul>
+        </div>
+    <div class="col-md-2"></div>
 </div>
 
 </body>
