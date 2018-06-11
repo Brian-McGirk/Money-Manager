@@ -1,0 +1,19 @@
+table, th, td{
+    border: 1px solid black;
+}
+
+table{
+    width: 100%;
+
+}
+
+.table-wrapper{
+        display: block;
+        overflow-y: auto;
+        height: 350px;
+}
+
+
+label{
+    font-weight: normal;
+}

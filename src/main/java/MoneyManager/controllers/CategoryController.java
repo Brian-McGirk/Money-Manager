@@ -12,9 +12,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("category")
@@ -65,6 +68,37 @@ public class CategoryController {
         return "redirect:/user/add-expense";
 
     }
+
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String displayRemoveCategoryForm(Model model, HttpSession httpSession) {
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        model.addAttribute("user", user);
+        model.addAttribute("title", "Remove Category");
+        return "category/remove";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveCategoryForm(@RequestParam(required = false) int[] categoryIds) {
+
+        if(categoryIds == null){
+            return "redirect:/home";
+        }
+
+        for (int categoryId : categoryIds) {
+            categoryDao.deleteById(categoryId);
+        }
+
+        return "redirect:/home";
+    }
+
 
 
 }

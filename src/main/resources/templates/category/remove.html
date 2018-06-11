@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head >
+
+    <div th:replace="fragments :: head"></div>
+    <div th:replace="fragments :: navBarMargin"></div>
+    <link rel="stylesheet" th:href="@{/css/removeCategory.css}" />
+
+</head>
+
+<body class="container marginUnderNavBar">
+
+<div th:replace="fragments:: navigation"></div>
+
+
+<div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-2">
+
+        <form method="post" action="/category/remove">
+
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Category</th>
+
+                    </tr>
+
+                    <tr th:each="category : ${user.categories}" >
+                        <td><input type="checkbox" name="categoryIds" th:value="${category.id}" th:id="${category.id}"/>
+                            <label th:for="${category.id}" th:text="${category.name}"></label></td>
+
+                    </tr>
+
+                </table>
+            </div>
+
+            <br>
+
+
+                    <input class="remove-button" type="submit" value="Remove Category" />
+
+
+
+
+        </form>
+    </div>
+    <div class="col-md-5"></div>
+
+
+
+</div>
+
+</body>
+</html>
