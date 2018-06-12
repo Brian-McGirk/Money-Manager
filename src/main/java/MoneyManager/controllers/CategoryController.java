@@ -4,20 +4,19 @@ import MoneyManager.models.Category;
 import MoneyManager.models.Expense;
 import MoneyManager.models.User;
 import MoneyManager.models.data.CategoryDao;
+import MoneyManager.models.data.ExpenseDao;
 import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("category")
@@ -28,6 +27,9 @@ public class CategoryController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ExpenseDao expenseDao;
 
 //    @RequestMapping(value="add", method = RequestMethod.GET)
 //    public String displayAddForm(Model model, HttpSession httpSession){
@@ -86,20 +88,27 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveCategoryForm(@RequestParam(required = false) int[] categoryIds) {
+    public String processRemoveCategoryForm(@RequestParam(required = false) int[] categoryIds, HttpSession httpSession) {
 
         if(categoryIds == null){
             return "redirect:/home";
         }
 
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
+        List<Expense> expenses = user.getExpenses();
+
         for (int categoryId : categoryIds) {
+            for(Expense expense : expenses){
+                if(categoryId == expense.getCategory().getId()){
+                    expenseDao.deleteById(expense.getId());
+                }
+            }
             categoryDao.deleteById(categoryId);
         }
 
         return "redirect:/home";
     }
-
-
-
 
 }

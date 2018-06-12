@@ -243,7 +243,6 @@ public class ExpenseController {
         model.addAttribute(expense);
         model.addAttribute("user", user);
 
-//        categoryDao.deleteById(expense.getCategory().getId());
         expenseDao.deleteById(expenseId);
 
         return "expense/edit";

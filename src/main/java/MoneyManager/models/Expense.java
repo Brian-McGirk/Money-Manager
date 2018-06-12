@@ -55,7 +55,6 @@ public class Expense {
         this.name = name;
     }
 
-
     public Category getCategory() {
         return category;
     }
