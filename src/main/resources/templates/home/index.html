@@ -27,10 +27,10 @@
                 </tr>
 
                 <tr th:each="expense : ${user.expenses}">
-                    <td th:unless="${expense.category == null}" th:text="${expense.category.name}"></td>
-                    <td th:unless="${expense.category == null}" th:text="${expense.name}"></td>
-                    <td th:unless="${expense.category == null}" th:text="'$ ' + ${expense.weeklyCost}"></td>
-                    <td th:unless="${expense.category == null}" th:text="'$ ' + ${expense.monthlyCost}"></td>
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="${expense.category.name}"></td>
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="${expense.name}"></td>
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="'$ ' + ${expense.weeklyCost}"></td>
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="'$ ' + ${expense.monthlyCost}"></td>
 
                 </tr>
                 <tr th:unless="${user.expenses.size() - numberOfDailyExpenses >= 9}">

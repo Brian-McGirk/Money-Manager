@@ -11,13 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,6 +31,8 @@ public class ExpenseController {
 
     @Autowired
     private ExpenseDao expenseDao;
+
+    private ArrayList<Expense> expenses = new ArrayList<>();
 
 
 
@@ -183,5 +184,139 @@ public class ExpenseController {
         return "redirect:/home";
     }
 
+    @RequestMapping(value = "edit-selection", method = RequestMethod.GET)
+    public String displayEditSelectionForm(Model model, HttpSession httpSession){
+
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        model.addAttribute("user", user);
+
+        return "expense/edit-selection";
+    }
+
+//    @RequestMapping(value = "edit-selection", method = RequestMethod.POST)
+//    public String processEditSelectionForm(Model model, @RequestParam(required = false) int expenseId, HttpSession httpSession) {
+//
+//
+//        Optional<Expense> expenseOptional;
+//
+//
+//
+//
+////        for (int expenseId : expenseIds) {
+//            expenseOptional = expenseDao.findById(expenseId);
+//            Expense expense = expenseOptional.get();
+//            expenses.add(expense);
+////        }
+//
+//
+//
+//        model.addAttribute(new Expense());
+//        model.addAttribute("expenses", expenses);
+//
+//        return "expense/edit";
+//    }
+
+    @RequestMapping(value = "edit/{expenseId}", method = RequestMethod.GET)
+    public String processEditSelectionForm(Model model, @PathVariable int expenseId, HttpSession httpSession) {
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+
+        Optional<Expense> expenseOptional = expenseDao.findById(expenseId);
+        Expense expense = expenseOptional.get();
+
+
+        model.addAttribute(expense);
+        model.addAttribute("user", user);
+
+//        categoryDao.deleteById(expense.getCategory().getId());
+        expenseDao.deleteById(expenseId);
+
+        return "expense/edit";
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm(Model model, @ModelAttribute @Valid Expense expense, Errors errors,
+                                  @RequestParam int categoryId, HttpSession httpSession) {
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
+        if(errors.hasErrors()){
+            model.addAttribute(expense);
+            return "expense/edit";
+        }
+
+
+        Optional<Category> categoryObject = categoryDao.findById(categoryId);
+        Category category = categoryObject.get();
+
+        expense.setCategory(category);
+        expense.calcMonthlyCost(expense.getWeeklyCost());
+
+        expenseDao.save(expense);
+
+        user.addItem(expense);
+
+        userDao.save(user);
+
+        return "redirect:/home";
+
+    }
+
+
+
+//
+//
+//        expenseDao.save(expense);
+//
+//        return "redirect:/home";
+//    }
+
+//        for (int expenseId : expenseIds) {
+//            expenseDao.deleteById(expenseId);
+//        }
+
+//        Optional<Expense> expenseOptional = expenseDao.findById(id);
+//        Expense expense = expenseOptional.get();
+//
+//        model.addAttribute("expense", expense);
+//        model.addAttribute("user", user);
+//        expenseDao.deleteById(id);
+
+
+//    @RequestMapping(value = "edit", method = RequestMethod.POST)
+//    public String processEditForm(@ModelAttribute @Valid Expense expense, Errors errors, Model model,
+//                                  @PathVariable(required = false) int id, HttpSession httpSession){
+//
+//        Object userInSession = httpSession.getAttribute("user");
+//        User user = userDao.findByUserName(userInSession.toString());
+//
+//        if(errors.hasErrors()){
+//            model.addAttribute("expense", expense);
+//            model.addAttribute("user", user);
+//
+//            return "expense/edit";
+//        }
+//
+//
+//        expenseDao.save(expense);
+//
+//        return "redirect:/home";
+//    }
 
 }
