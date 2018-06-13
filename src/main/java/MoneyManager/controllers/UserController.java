@@ -246,14 +246,29 @@ public class UserController {
     @RequestMapping(value = "settings", method = RequestMethod.POST)
     public String processSettingsForm(Model model, HttpSession httpSession, @RequestParam String userName){
 
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
        if(!userDao.existsByUserName(userName)){
            model.addAttribute("title", "Settings");
            model.addAttribute("userError", "That user doesn't exist");
            return "user/settings";
        }
 
-        Object userInSession = httpSession.getAttribute("user");
-        User user = userDao.findByUserName(userInSession.toString());
+       if(user.getUserName().equals(userName)){
+           model.addAttribute("title", "Settings");
+           model.addAttribute("userError", "You cannot partner with yourself");
+           return "user/settings";
+       }
+
+        for(User partner : user.getPartners()){
+           if(partner.getUserName().equals(userName)){
+               model.addAttribute("title", "Settings");
+               model.addAttribute("userError", "You are already partners with this user");
+               return "user/settings";
+           }
+        }
+
 
         User partner = userDao.findByUserName(userName);
 
