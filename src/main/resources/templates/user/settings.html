@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head >
+
+    <div th:replace="fragments :: head"></div>
+    <div th:replace="fragments :: navBarMargin"></div>
+    <!--<script type="text/javascript" th:src="@{/js/settings.js}"></script>-->
+
+
+</head>
+
+<body class="container marginUnderNavBar">
+
+<div th:replace="fragments:: navigation"></div>
+
+<h5>Share Expenses and Income with:</h5>
+
+<form method="post">
+    <label for="userName"></label>
+    <input type="text" id="userName" name="userName"/>
+    <input type="submit" value="Save"/>
+</form>
+<span th:text="${userError}"></span>
+
+</body>
+</html>

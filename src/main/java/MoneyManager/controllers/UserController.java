@@ -225,6 +225,51 @@ public class UserController {
 
     }
 
+    @RequestMapping(value = "settings", method = RequestMethod.GET)
+    public String displaySettings(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+
+        model.addAttribute("title", "Settings");
+
+
+        return "user/settings";
+    }
+
+    @RequestMapping(value = "settings", method = RequestMethod.POST)
+    public String processSettingsForm(Model model, HttpSession httpSession, @RequestParam String userName){
+
+       if(!userDao.existsByUserName(userName)){
+           model.addAttribute("title", "Settings");
+           model.addAttribute("userError", "That user doesn't exist");
+           return "user/settings";
+       }
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
+        User partner = userDao.findByUserName(userName);
+
+        user.addPartner(partner);
+        partner.addPartner(user);
+
+        userDao.save(user);
+
+
+        model.addAttribute("title", "Settings");
+
+
+        return "user/settings";
+    }
+
+
 }
 
 //    @RequestMapping(value = "add-expense", method = RequestMethod.GET)

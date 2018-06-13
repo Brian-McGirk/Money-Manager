@@ -146,10 +146,28 @@ public class ExpenseController {
         User user = userDao.findByUserName(userInSession.toString());
         Expense expense = new Expense();
 
+
+        List<User> partners = user.getPartners();
+
+        double partnersDailyTotal = 0.0;
+        int partnersNumberOfDailyExpenses = 0;
+
+        if(partners.size() > 0){
+            for(User partner : partners){
+                partnersDailyTotal += expense.calcDailyTotal(partner.getExpenses());
+                partnersNumberOfDailyExpenses += expense.getNumberOfDailyExpense(partner.getExpenses());
+
+            }
+        }
+
+        double dailyExpenseTotal = partnersDailyTotal + expense.calcDailyTotal(user.getExpenses());
+        int numberOfDailyExpenses = partnersNumberOfDailyExpenses + expense.getNumberOfDailyExpense(user.getExpenses());
+
+
         model.addAttribute("user", user);
         model.addAttribute(expense);
-        model.addAttribute("numberOfDailyExpenses", expense.getNumberOfDailyExpense(user.getExpenses()));
-        model.addAttribute("dailyExpenseTotal", expense.calcDailyTotal(user.getExpenses()));
+        model.addAttribute("numberOfDailyExpenses", numberOfDailyExpenses);
+        model.addAttribute("dailyExpenseTotal", dailyExpenseTotal);
 
         return "expense/viewDaily";
     }

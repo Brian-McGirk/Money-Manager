@@ -36,6 +36,20 @@ public class User {
     @ManyToMany
     private List<Income> incomes;
 
+    @ManyToMany
+    @JoinTable(name="user_partners",
+            joinColumns=@JoinColumn(name="userId"),
+            inverseJoinColumns=@JoinColumn(name="partnerId")
+    )
+    private List<User> partners;
+
+    @ManyToMany
+    @JoinTable(name="user_partners",
+            joinColumns=@JoinColumn(name="partnerId"),
+            inverseJoinColumns=@JoinColumn(name="userId")
+    )
+    private List<User> partnersOf;
+
 
     public User() {}
 
@@ -86,8 +100,20 @@ public class User {
 
     public List<Category> getCategories() { return categories; }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public List<User> getPartners() {
+        return partners;
+    }
+
+    public void addPartner(User user){
+        partners.add(user);
+    }
+
+    public List<User> getPartnersOf() {
+        return partnersOf;
+    }
+
+    public void addPartnerOf(User user){
+        partnersOf.add(user);
     }
 
     public void addCategory(Category category){categories.add(category);}
