@@ -11,6 +11,8 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface CategoryDao extends CrudRepository<Category, Integer> {
+    public Category findByName(String name);
+    public boolean existsByName(String name);
 }
 
 

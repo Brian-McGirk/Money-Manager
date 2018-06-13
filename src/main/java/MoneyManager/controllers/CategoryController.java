@@ -63,6 +63,28 @@ public class CategoryController {
             return "/user/add-expense";
         }
 
+        if(categoryDao.existsByName(category.getName())){
+            Iterable<Category> categories = user.getCategories();
+            for(Category userCategory : categories){
+                if(userCategory.getName().toLowerCase().equals(category.getName().toLowerCase())){
+                    model.addAttribute("title", "Add");
+                    model.addAttribute("categoryError", "That category already exists");
+                    model.addAttribute("user", user);
+                    model.addAttribute(new Expense());
+                    model.addAttribute(new Category());
+                    return "/user/add-expense";
+                }
+            }
+
+            Category category1 = categoryDao.findByName(category.getName());
+            user.addCategory(category1);
+            userDao.save(user);
+
+            return "redirect:/user/add-expense";
+
+        }
+
+
         categoryDao.save(category);
         user.addCategory(category);
         userDao.save(user);
