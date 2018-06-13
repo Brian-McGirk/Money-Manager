@@ -13,6 +13,45 @@
 
 <div th:replace="fragments:: navigation"></div>
 
+<div class="row">
+
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+
+        <form method="post" action="/income/edit" th:object="${income}">
+
+            <div class="form-group">
+                <span class="error errors" th:errors="*{date}"></span>
+                <label th:for="date">Date</label>
+                <input class="form-control" th:field="*{date}" />
+            </div>
+
+            <div class="form-group">
+                <span class="error errors" th:errors="*{source}"></span>
+                <label th:for="source">Source</label>
+                <input class="form-control" th:field="*{source}" />
+            </div>
+
+            <div th:unless="${income.dailyAmount == 0}" class="form-group cost">
+                <label th:for="dailyAmount">Daily amount</label>
+                <span class="error errors" th:errors="*{dailyAmount}" th:text="'Please enter a valid number (i.e. 10.50)'"></span>
+                <input class="form-control" th:field="*{dailyAmount}"/>
+            </div>
+
+            <div th:unless="${income.weeklyAmount == 0}" class="form-group cost">
+                <label th:for="weeklyAmount">Weekly amount</label>
+                <span class="error errors" th:errors="*{weeklyAmount}" th:text="'Please enter a valid number (i.e. 10.50)'"></span>
+                <input class="form-control" th:field="*{weeklyAmount}"/>
+            </div>
+
+
+            <input type="submit" value="Save"/>
+        </form>
+
+    </div>
+    <div class="col-md-4"></div>
+</div>
 
 </body>
 </html>

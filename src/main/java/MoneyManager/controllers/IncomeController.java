@@ -1,6 +1,7 @@
 package MoneyManager.controllers;
 
 import MoneyManager.models.Category;
+import MoneyManager.models.Expense;
 import MoneyManager.models.Income;
 import MoneyManager.models.User;
 import MoneyManager.models.data.IncomeDao;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -151,5 +149,69 @@ public class IncomeController {
         return "redirect:/home";
     }
 
+    @RequestMapping(value = "edit-selection", method = RequestMethod.GET)
+    public String displayEditSelectionForm(Model model, HttpSession httpSession){
+
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        model.addAttribute("user", user);
+
+        return "income/edit-selection";
+    }
+
+    @RequestMapping(value = "edit/{incomeId}", method = RequestMethod.GET)
+    public String processEditSelectionForm(Model model, @PathVariable int incomeId, HttpSession httpSession) {
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+
+        Optional<Income> incomeOptional = incomeDao.findById(incomeId);
+        Income income = incomeOptional.get();
+
+
+        model.addAttribute(income);
+        model.addAttribute("user", user);
+
+        incomeDao.deleteById(incomeId);
+
+        return "income/edit";
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm(Model model, @ModelAttribute @Valid Income income, Errors errors,
+                                  HttpSession httpSession) {
+
+        Object userInSession = httpSession.getAttribute("user");
+        User user = userDao.findByUserName(userInSession.toString());
+
+        if(errors.hasErrors()){
+            model.addAttribute(income);
+            return "income/edit";
+        }
+
+        income.calcMonthlyAmount(income.getWeeklyAmount());
+        incomeDao.save(income);
+
+        user.addIncome(income);
+
+
+        userDao.save(user);
+
+        return "redirect:/home";
+
+    }
 
 }
