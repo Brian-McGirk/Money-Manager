@@ -13,7 +13,7 @@
 <div th:replace="fragments :: navigation"></div>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
 
         <h3>Weekly and Monthly Expenses</h3>
 
@@ -53,19 +53,19 @@
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
 
         <h3>Weekly and Monthly Income</h3>
 
         <div class="table-wrapper">
             <table>
                 <tr class="table-column">
-                    <th>Source</th>
-                    <th>Weekly</th>
-                    <th>Monthly</th>
+                    <th class="shift-right">Income</th>
+                    <th>Weekly Income</th>
+                    <th>Monthly Income</th>
                 </tr>
                 <tr th:each="income : ${user.incomes}">
-                    <td th:unless="${income.weeklyAmount == 0}" th:text="${income.source}"></td>
+                    <td class="shift-right" th:unless="${income.weeklyAmount == 0}" th:text="${income.source}"></td>
                     <td th:unless="${income.weeklyAmount == 0}" th:text="'$ ' + ${income.weeklyAmount}"></td>
                     <td th:unless="${income.weeklyAmount == 0}" th:text="'$ ' + ${income.monthlyAmount}"></td>
                 </tr>

@@ -26,3 +26,7 @@ table{
 .header-align, .summary, th{
     text-align: center;
 }
+
+.shift-right{
+    width: 30%;
+}
