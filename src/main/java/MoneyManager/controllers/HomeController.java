@@ -19,6 +19,8 @@ public class HomeController {
     @Autowired
     private UserDao userDao;
 
+    private String requestedBy;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String displayHome(Model model, HttpSession httpSession){
 
@@ -32,6 +34,11 @@ public class HomeController {
         Expense expense = new Expense();
         Income income = new Income();
 
+        if(user.getRequestedBy() != null){
+            requestedBy =user.getRequestedBy();
+            model.addAttribute("requestedBy", requestedBy);
+        }
+
 
         model.addAttribute("monthlyExpenseTotal", expense.calcMonthlyTotal(user.getExpenses()));
         model.addAttribute("monthlyIncomeTotal", income.calcMonthlyTotal(user.getIncomes()));
@@ -44,6 +51,46 @@ public class HomeController {
 
         return "home/index";
 
+    }
+
+    @RequestMapping(value = "deny", method = RequestMethod.GET)
+    public String denyPartner(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        user.setRequestedBy(null);
+        userDao.save(user);
+
+        return "redirect:";
+    }
+
+    @RequestMapping(value = "accept", method = RequestMethod.GET)
+    public String allowPartner(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if(userInSession == null){
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        User partner = userDao.findByUserName(requestedBy);
+
+        user.setRequestedBy(null);
+
+        user.addPartner(partner);
+        partner.addPartner(user);
+
+        userDao.save(user);
+
+        return "redirect:";
     }
 
 //    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)

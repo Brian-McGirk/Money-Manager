@@ -19,7 +19,8 @@ public class User {
 
     private String pw_hash;
 
-    @NotNull
+    private String requestedBy;
+
     @Transient
     @Size(min=3, max=20, message = "Password must be 5-15 characters")
     private String password;
@@ -51,7 +52,7 @@ public class User {
     private List<User> partnersOf;
 
 
-    public User() {}
+    public User() { }
 
     public int getId() {
         return id;
@@ -73,6 +74,15 @@ public class User {
         this.pw_hash = pw_hash;
     }
 
+    public String getRequestedBy() {
+        return requestedBy;
+    }
+
+    public void setRequestedBy(String requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
+
     public String getPassword() {
         return password;
     }
@@ -84,6 +94,7 @@ public class User {
     public String getVerifyPassword() {
         return verifyPassword;
     }
+
 
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
@@ -121,6 +132,7 @@ public class User {
     public List<Income> getIncomes() { return incomes; }
 
     public void addIncome(Income income){incomes.add(income);}
+
 
 
     //    private void checkPassword(){

@@ -148,6 +148,7 @@ public class ExpenseController {
 
 
         List<User> partners = user.getPartners();
+        ArrayList<Expense> partnerExpenses = new ArrayList<>();
 
         double partnersDailyTotal = 0.0;
         int partnersNumberOfDailyExpenses = 0;
@@ -156,7 +157,9 @@ public class ExpenseController {
             for(User partner : partners){
                 partnersDailyTotal += expense.calcDailyTotal(partner.getExpenses());
                 partnersNumberOfDailyExpenses += expense.getNumberOfDailyExpense(partner.getExpenses());
-
+                    for(Expense partnerExpense : partner.getExpenses()){
+                        partnerExpenses.add(partnerExpense);
+                    }
             }
         }
 
@@ -164,6 +167,7 @@ public class ExpenseController {
         int numberOfDailyExpenses = partnersNumberOfDailyExpenses + expense.getNumberOfDailyExpense(user.getExpenses());
 
 
+        model.addAttribute("partnerExpenses", partnerExpenses);
         model.addAttribute("user", user);
         model.addAttribute(expense);
         model.addAttribute("numberOfDailyExpenses", numberOfDailyExpenses);

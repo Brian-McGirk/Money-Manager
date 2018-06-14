@@ -12,6 +12,15 @@
 
 <div th:replace="fragments :: navigation"></div>
 
+<div th:if="${requestedBy}" class="alert alert-warning request alert-dismissible">
+    <strong th:text="${requestedBy}"></strong> would like to share their finances with you!
+    <a href="/home/deny" class="btn btn-danger choice-buttons" data-dismiss="alert" role="button">Deny</a>
+    <a href="/home/accept" class="btn btn-success choice-buttons" data-dismiss="alert" role="button">Accept</a>
+    <a class="close" data-dismiss="alert" aria-label="close">Maybe</a>
+
+
+</div>
+
 <div class="row">
     <div class="col-md-6">
 
@@ -52,6 +61,8 @@
 
 
     </div>
+
+
 
     <div class="col-md-6">
 

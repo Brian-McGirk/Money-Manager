@@ -23,10 +23,19 @@ table{
     top: -150px;
 }
 
-.header-align, .summary, th{
+.header-align, .summary, th {
     text-align: center;
 }
 
 .shift-right{
     width: 30%;
+}
+
+.request{
+    text-align: center;
+    color: black;
+}
+
+.choice-buttons{
+    margin-left: 10px;
 }
