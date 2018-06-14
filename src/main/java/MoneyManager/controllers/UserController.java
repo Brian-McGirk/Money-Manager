@@ -61,10 +61,10 @@ public class UserController {
         User findByUserName = userDao.findByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession != null && userInSession.equals(user.getUserName())){
-            model.addAttribute("nameError", "User already logged in");
+        if(userInSession != null){
+            model.addAttribute("nameError", "A user is already logged in");
             return "user/login";
-    }
+        }
 
         if(errors.hasErrors()){
             model.addAttribute(user);
@@ -101,6 +101,10 @@ public class UserController {
         boolean userName = userDao.existsByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
 
+        if(userInSession != null){
+            model.addAttribute("nameError", "A user is already logged in");
+            return "user/register";
+        }
 
         if(userName){
             model.addAttribute("nameError", "Username already exists");
