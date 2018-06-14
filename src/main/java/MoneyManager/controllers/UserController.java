@@ -242,7 +242,7 @@ public class UserController {
 
 
         model.addAttribute("title", "Settings");
-
+        model.addAttribute("user", user);
 
         return "user/settings";
     }
@@ -290,6 +290,7 @@ public class UserController {
 
         model.addAttribute("title", "Settings");
         model.addAttribute("requestSent", "Your request has been sent!");
+        model.addAttribute("user", user);
 
 
         return "user/settings";

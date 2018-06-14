@@ -40,8 +40,15 @@
                     <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="${expense.name}"></td>
                     <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="'$ ' + ${expense.weeklyCost}"></td>
                     <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="'$ ' + ${expense.monthlyCost}"></td>
-
                 </tr>
+
+                <tr th:each="expense : ${partnerExpenses}">
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="${expense.category.name}"></td>
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="${expense.name}"></td>
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="'$ ' + ${expense.weeklyCost}"></td>
+                    <td th:unless="${expense.category == null or expense.weeklyCost == 0}" th:text="'$ ' + ${expense.monthlyCost}"></td>
+                </tr>
+
                 <tr th:unless="${user.expenses.size() - numberOfDailyExpenses >= 9}">
                     <td class="table-column" colspan="3">Total Monthly Expenses:</td>
                     <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyExpenseTotal, 0, 'COMMA', 2, 'POINT')}"></td>
@@ -57,7 +64,7 @@
             </tr>
         </table>
 
-        <p class="new-user" th:unless="${user.expenses.size()}">Add your expenses to get started!</p>
+        <p class="new-user" th:unless="${user.expenses.size() != 0 or partnerExpenses.size() != 0}">Add your expenses to get started!</p>
 
 
     </div>
@@ -81,6 +88,12 @@
                     <td th:unless="${income.weeklyAmount == 0}" th:text="'$ ' + ${income.monthlyAmount}"></td>
                 </tr>
 
+                <tr th:each="income : ${partnerIncomes}">
+                    <td class="shift-right" th:unless="${income.weeklyAmount == 0}" th:text="${income.source}"></td>
+                    <td th:unless="${income.weeklyAmount == 0}" th:text="'$ ' + ${income.weeklyAmount}"></td>
+                    <td th:unless="${income.weeklyAmount == 0}" th:text="'$ ' + ${income.monthlyAmount}"></td>
+                </tr>
+
                 <tr th:unless="${user.incomes.size() - numberOfDailyIncomes >= 9}">
                     <td class="table-column" colspan="2">Total Monthly Income:</td>
                     <td th:text="'$ ' + ${#numbers.formatDecimal(monthlyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>
@@ -97,7 +110,7 @@
             </tr>
         </table>
 
-        <p class="new-user" th:unless="${user.incomes.size()}">Add your income to get started!</p>
+        <p class="new-user" th:unless="${user.incomes.size() != 0 or partnerIncomes.size() != 0}">Add your income to get started!</p>
 
     </div>
 </div>
