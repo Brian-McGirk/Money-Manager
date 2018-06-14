@@ -30,8 +30,14 @@
                     <td class="date-shorten" th:unless="${income.dailyAmount == 0}" th:text="${income.date}"></td>
                     <td th:unless="${income.dailyAmount == 0}" th:text="${income.source}"></td>
                     <td th:unless="${income.dailyAmount == 0}" th:text="'$ ' + ${income.dailyAmount}"></td>
-
                 </tr>
+
+                <tr th:each="income : ${partnerIncomes}">
+                    <td class="date-shorten" th:unless="${income.dailyAmount == 0}" th:text="${income.date}"></td>
+                    <td th:unless="${income.dailyAmount == 0}" th:text="${income.source}"></td>
+                    <td th:unless="${income.dailyAmount == 0}" th:text="'$ ' + ${income.dailyAmount}"></td>
+                </tr>
+
                 <tr th:unless="${numberOfDailyIncomes >= 16}">
                     <td class="table-column" colspan="2">Total daily income:</td>
                     <td th:text="'$ ' + ${#numbers.formatDecimal(dailyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>

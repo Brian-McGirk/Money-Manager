@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -79,7 +81,7 @@ public class IncomeController {
         User user = userDao.findByUserName(userInSession.toString());
 
         if(errors.hasErrors()){
-            model.addAttribute("title", "Add Daily Expense");
+            model.addAttribute("title", "Add Daily Income");
             model.addAttribute("user", user);
             model.addAttribute(income);
             model.addAttribute("dailyIncomesTotal", income.calcDailyAmount(user.getIncomes()));
@@ -93,7 +95,7 @@ public class IncomeController {
         user.addIncome(income);
         userDao.save(user);
 
-        model.addAttribute("title", "Add Daily Expense");
+        model.addAttribute("title", "Add Daily Income");
         model.addAttribute("user", user);
 
         return "redirect:view-daily";
@@ -111,10 +113,31 @@ public class IncomeController {
         User user = userDao.findByUserName(userInSession.toString());
         Income income = new Income();
 
+        List<User> partners = user.getPartners();
+        partners.addAll(user.getPartnersOf());
+
+        ArrayList<Income> partnerIncomes = new ArrayList<>();
+
+        double partnersDailyTotal = 0.0;
+        int partnersNumberOfDailyIncomes = 0;
+
+        if(partners.size() > 0){
+            for(User partner : partners){
+                partnersDailyTotal += income.calcDailyAmount(partner.getIncomes());
+                partnersNumberOfDailyIncomes += income.getNumberOfDailyIncome(partner.getIncomes());
+                partnerIncomes.addAll(partner.getIncomes());
+            }
+        }
+
+        double dailyIncomeTotal = partnersDailyTotal + income.calcDailyAmount(user.getIncomes());
+        int numberOfDailyIncomes = partnersNumberOfDailyIncomes + income.getNumberOfDailyIncome(user.getIncomes());
+
+
+        model.addAttribute("partnerIncomes", partnerIncomes);
         model.addAttribute("user", user);
         model.addAttribute(income);
-        model.addAttribute("numberOfDailyIncomes", income.getNumberOfDailyIncome(user.getIncomes()));
-        model.addAttribute("dailyIncomeTotal", income.calcDailyAmount(user.getIncomes()));
+        model.addAttribute("numberOfDailyIncomes", numberOfDailyIncomes);
+        model.addAttribute("dailyIncomeTotal", dailyIncomeTotal);
 
         return "income/viewDaily";
     }
