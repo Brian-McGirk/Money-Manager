@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,10 +149,7 @@ public class ExpenseController {
 
 
         List<User> partners = user.getPartners();
-
-        for(User partnersOf : user.getPartnersOf()){
-            partners.add(partnersOf);
-        }
+        partners.addAll(user.getPartnersOf());
 
         ArrayList<Expense> partnerExpenses = new ArrayList<>();
 
@@ -162,9 +160,7 @@ public class ExpenseController {
             for(User partner : partners){
                 partnersDailyTotal += expense.calcDailyTotal(partner.getExpenses());
                 partnersNumberOfDailyExpenses += expense.getNumberOfDailyExpense(partner.getExpenses());
-                    for(Expense partnerExpense : partner.getExpenses()){
-                        partnerExpenses.add(partnerExpense);
-                    }
+                partnerExpenses.addAll(partner.getExpenses());
             }
         }
 

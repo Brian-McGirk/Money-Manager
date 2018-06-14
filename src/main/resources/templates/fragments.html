@@ -27,6 +27,8 @@
 
 <body>
 
+
+
     <div th:fragment="navigation" th:remove="tag">
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -35,16 +37,19 @@
                     <a class="navbar-brand" href="/home">Budget Master</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <!-- TODO make pages and add links here -->
                     <li><a href="/home">Home</a></li>
                     <li><a href="/expense/view-daily">Daily Expense</a></li>
                     <li><a href="/income/view-daily">Daily Income</a></li>
+
                 </ul>
+
                 <ul class="nav navbar-nav navbar-right">
                     <!--<li><a href="/user/edit">Links</a></li>-->
                     <!--<li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
                     <!--<li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>-->
                     <!--<li><a href="/user/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
+
+                    <li><span th:text="'Signed in as: ' + ${user.userName}" class="user"></span></li>
 
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">Category

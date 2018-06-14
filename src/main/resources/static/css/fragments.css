@@ -5,3 +5,11 @@
 .error{
     color: red;
 }
+
+.user{
+color: white;
+font-size: 12px;
+position: relative;
+right:250px;
+top:-4px;
+}
