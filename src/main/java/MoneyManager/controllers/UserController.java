@@ -285,6 +285,7 @@ public class UserController {
 //      userDao.save(partner);
 
         model.addAttribute("title", "Settings");
+        model.addAttribute("requestSent", "Your request has been sent!");
 
 
         return "user/settings";

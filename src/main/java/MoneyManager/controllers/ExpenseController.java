@@ -148,6 +148,11 @@ public class ExpenseController {
 
 
         List<User> partners = user.getPartners();
+
+        for(User partnersOf : user.getPartnersOf()){
+            partners.add(partnersOf);
+        }
+
         ArrayList<Expense> partnerExpenses = new ArrayList<>();
 
         double partnersDailyTotal = 0.0;

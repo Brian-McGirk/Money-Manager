@@ -35,7 +35,7 @@ public class HomeController {
         Income income = new Income();
 
         if(user.getRequestedBy() != null){
-            requestedBy =user.getRequestedBy();
+            requestedBy = user.getRequestedBy();
             model.addAttribute("requestedBy", requestedBy);
         }
 
@@ -73,6 +73,8 @@ public class HomeController {
     @RequestMapping(value = "accept", method = RequestMethod.GET)
     public String allowPartner(Model model, HttpSession httpSession){
 
+
+
         Object userInSession = httpSession.getAttribute("user");
 
         if(userInSession == null){
@@ -86,7 +88,7 @@ public class HomeController {
         user.setRequestedBy(null);
 
         user.addPartner(partner);
-        partner.addPartner(user);
+//        partner.addPartner(user);
 
         userDao.save(user);
 
