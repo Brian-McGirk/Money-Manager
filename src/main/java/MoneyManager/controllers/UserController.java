@@ -254,29 +254,47 @@ public class UserController {
         User user = userDao.findByUserName(userInSession.toString());
 
         if(!userDao.existsByUserName(userName)){
-        model.addAttribute("title", "Settings");
-        model.addAttribute("userError", "That user doesn't exist");
-        return "user/settings";
+            model.addAttribute("title", "Settings");
+            model.addAttribute("userError", "That user doesn't exist");
+            model.addAttribute("user", user);
+            return "user/settings";
         }
 
         if(user.getUserName().equals(userName)){
-        model.addAttribute("title", "Settings");
-        model.addAttribute("userError", "You cannot partner with yourself");
-        return "user/settings";
+            model.addAttribute("title", "Settings");
+            model.addAttribute("userError", "You cannot partner with yourself");
+            model.addAttribute("requestSent", "");
+            model.addAttribute("user", user);
+            return "user/settings";
         }
 
         for(User partner : user.getPartners()){
-        if(partner.getUserName().equals(userName)){
-           model.addAttribute("title", "Settings");
-           model.addAttribute("userError", "You are already partners with this user");
-           return "user/settings";
+            if(partner.getUserName().equals(userName)){
+               model.addAttribute("title", "Settings");
+               model.addAttribute("userError", "You are already partners with this user");
+                model.addAttribute("requestSent", "");
+                model.addAttribute("user", user);
+               return "user/settings";
+            }
         }
+
+        for(User testing : user.getPartnersOf()){
+            if(testing.getUserName().equals(userName)){
+                model.addAttribute("title", "Settings");
+                model.addAttribute("userError", "You are already partners with this user");
+                model.addAttribute("requestSent", "");
+                model.addAttribute("user", user);
+                return "user/settings";
+            }
         }
+
 
 
         User partner = userDao.findByUserName(userName);
 
-        partner.setRequestedBy(user.getUserName());
+//        partner.setRequestedBy(user.getUserName());
+
+        partner.addRequest(user.getUserName());
 
         userDao.save(partner);
 //      user.addPartner(partner);

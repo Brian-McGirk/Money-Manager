@@ -36,10 +36,14 @@ public class HomeController {
         Expense expense = new Expense();
         Income income = new Income();
 
-        if(user.getRequestedBy() != null){
-            requestedBy = user.getRequestedBy();
-            model.addAttribute("requestedBy", requestedBy);
+        for(String name : user.getRequestedBy()){
+            if(name != null){
+                requestedBy = name;
+                model.addAttribute("requestedBy", requestedBy);
+                break;
+            }
         }
+
 
         List<User> partners = user.getPartners();
         partners.addAll(user.getPartnersOf());
@@ -106,7 +110,8 @@ public class HomeController {
 
         User user = userDao.findByUserName(userInSession.toString());
 
-        user.setRequestedBy(null);
+        user.getRequestedBy().remove(requestedBy);
+
         userDao.save(user);
 
         return "redirect:";
@@ -127,9 +132,13 @@ public class HomeController {
 
         User partner = userDao.findByUserName(requestedBy);
 
-        user.setRequestedBy(null);
+//        user.setRequestedBy(null);
 
-        user.addPartner(partner);
+        user.getRequestedBy().remove(requestedBy);
+
+        user.addPartnerOf(partner);
+
+//        user.addPartner(partner);
 //        partner.addPartner(user);
 
         userDao.save(user);

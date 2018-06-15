@@ -19,7 +19,7 @@ public class User {
 
     private String pw_hash;
 
-    private String requestedBy;
+//    private String requestedBy;
 
     @Transient
     @Size(min=3, max=20, message = "Password must be 5-15 characters")
@@ -36,6 +36,9 @@ public class User {
 
     @ManyToMany
     private List<Income> incomes;
+
+    @ElementCollection
+    private List<String> requestedBy;
 
     @ManyToMany
     @JoinTable(name="user_partners",
@@ -74,14 +77,26 @@ public class User {
         this.pw_hash = pw_hash;
     }
 
-    public String getRequestedBy() {
+//    public String getRequestedBy() {
+//        return requestedBy;
+//    }
+//
+//    public void setRequestedBy(String requestedBy) {
+//        this.requestedBy = requestedBy;
+//    }
+
+
+    public List<String> getRequestedBy() {
         return requestedBy;
     }
 
-    public void setRequestedBy(String requestedBy) {
+    public void setRequestedBy(List<String> requestedBy) {
         this.requestedBy = requestedBy;
     }
 
+    public void addRequest(String name){
+        requestedBy.add(name);
+    }
 
     public String getPassword() {
         return password;
