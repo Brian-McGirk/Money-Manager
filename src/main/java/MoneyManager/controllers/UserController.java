@@ -278,8 +278,8 @@ public class UserController {
             }
         }
 
-        for(User testing : user.getPartnersOf()){
-            if(testing.getUserName().equals(userName)){
+        for(User partnerOf : user.getPartnersOf()){
+            if(partnerOf.getUserName().equals(userName)){
                 model.addAttribute("title", "Settings");
                 model.addAttribute("userError", "You are already partners with this user");
                 model.addAttribute("requestSent", "");
