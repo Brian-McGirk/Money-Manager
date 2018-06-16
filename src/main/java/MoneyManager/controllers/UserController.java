@@ -6,11 +6,8 @@ import MoneyManager.models.User;
 import MoneyManager.models.data.CategoryDao;
 import MoneyManager.models.data.ExpenseDao;
 import MoneyManager.models.data.UserDao;
-import MoneyManager.models.forms.AddUserExpenseForm;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,13 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 @Controller
@@ -100,6 +92,7 @@ public class UserController {
 
         boolean userName = userDao.existsByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
+
 
         if(userInSession != null){
             model.addAttribute("nameError", "A user is already logged in");

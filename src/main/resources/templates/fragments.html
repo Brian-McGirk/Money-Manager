@@ -40,6 +40,7 @@
                     <li><a href="/home">Home</a></li>
                     <li><a href="/expense/view-daily">Daily Expense</a></li>
                     <li><a href="/income/view-daily">Daily Income</a></li>
+                    <li><a href="/price-comparison">JSoup</a></li>
 
                 </ul>
 
@@ -49,7 +50,7 @@
                     <!--<li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>-->
                     <!--<li><a href="/user/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
 
-                    <li><span th:text="'Signed in as: ' + ${user.userName}" class="user"></span></li>
+                    <li th:unless="${user.userName == null}"><span th:text="'Signed in as: ' + ${user.userName}" class="user"></span></li>
 
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">Category
