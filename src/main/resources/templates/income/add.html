@@ -15,8 +15,11 @@
 
 <div class="row">
     <div class="col-md-2"></div>
+
         <div class="col-md-4">
+
             <form method="post" action="/income/add" th:object="${income}">
+
                 <h3>Add new income</h3>
 
                 <div class="form-group">
@@ -32,16 +35,21 @@
                     <br>
                     <input type="submit" value="Add income"/>
                 </div>
+
             </form>
+
         </div>
 
         <div class="col-md-4">
+
             <h3>Current income:</h3>
 
             <ul>
                 <li th:each="income : ${user.incomes}" th:text="${income.source}" th:unless="${income.weeklyAmount == 0}"></li>
             </ul>
+
         </div>
+
     <div class="col-md-2"></div>
 </div>
 

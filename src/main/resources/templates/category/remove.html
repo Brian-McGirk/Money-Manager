@@ -20,7 +20,6 @@
 
         <form method="post" action="/category/remove">
 
-
             <div class="table-wrapper">
                 <table>
                     <tr>
@@ -31,26 +30,22 @@
                     <tr th:each="category : ${user.categories}" >
                         <td><input type="checkbox" name="categoryIds" th:value="${category.id}" th:id="${category.id}"/>
                             <label th:for="${category.id}" th:text="${category.name}"></label></td>
-
                     </tr>
-
                 </table>
             </div>
 
             <br>
 
-
-                    <input class="remove-button" type="submit" value="Remove Category" />
-
-
-
+            <input class="remove-button" type="submit" value="Remove Category" />
 
         </form>
+
     </div>
+
     <div class="col-md-5"></div>
 
-
 </div>
+
 <h4 class="warning"><strong>Warning:</strong> Removing a category will remove all associated expenses as well!</h4>
 
 </body>

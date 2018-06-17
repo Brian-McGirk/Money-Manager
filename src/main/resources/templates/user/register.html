@@ -4,10 +4,8 @@
 <head >
 
     <div th:replace="fragments :: head"></div>
-
     <link rel="stylesheet" th:href="@{/css/register.css}" />
     <script type="application/javascript" th:src="@{/js/register.js}"></script>
-
 
 </head>
 
@@ -22,7 +20,6 @@
         <div class="col-md-12 registration-title">
             <h1 class="names">Registration</h1>
         </div>
-
     </div>
 
         <form method="POST" action="/user/register" role="form" id="register-form" th:object="${user}">
@@ -54,36 +51,36 @@
                 </div>
             </div>
 
-                <div class="row">
-                    <div class="col-md-12 optional-title">
-                        <!--<fieldset><legend>Optional</legend></fieldset>-->
-                        <!--<h4 class="names">Optional</h4>-->
-                    </div>
+            <div class="row">
+                <div class="col-md-12 optional-title">
+                    <!--<fieldset><legend>Optional</legend></fieldset>-->
+                    <!--<h4 class="names">Optional</h4>-->
                 </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <input type="hidden" value="*{id}"/>
-                    <div class="register-button">
-                        <button type="submit" class="btn btn-success register-button">Register</button>
+
+                    <div class="col-md-4">
+                        <input type="hidden" value="*{id}"/>
+                        <div class="register-button">
+                            <button type="submit" class="btn btn-success register-button">Register</button>
+                        </div>
                     </div>
-                </div>
+
                 <div class="col-md-4"></div>
             </div>
 
         </form>
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
+                </div>
             </div>
-        </div>
 
     </div>
 </div>
-
-
 
 </body>
 </html>

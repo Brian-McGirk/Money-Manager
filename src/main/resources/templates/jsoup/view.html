@@ -13,15 +13,11 @@
 
 <div th:replace="fragments :: navigation"></div>
 
-<!--<div th:each="title,index : ${titles}">-->
-    <!--<div th:text="${titles[index.index]}"></div>-->
-    <!--<div th:text="${prices[index.index]}"></div>-->
-    <!--<div th:text="${stores[index.index]}"></div>-->
-<!--</div>-->
-
 <div class="row">
     <div class="col-md-2"></div>
+
         <div class="col-md-8">
+
            <table>
                <tr>
                    <th>Retailer</th>
@@ -29,18 +25,16 @@
                    <th>Price</th>
 
                </tr>
+
                <tr th:each="title,index : ${titles}" th:unless="${title.length() == 0}">
                    <td th:text="${stores[index.index]}"></td>
-                   <!--<td><a th:href="${links[index.index]}" th:text="${stores[index.index]}"></a></td>-->
                    <td><a th:href="${links[index.index]}" th:text="${titles[index.index]}"></a></td>
-                   <!--<td th:text="${titles[index.index]}"></td>-->
                    <td th:text="${prices[index.index]}"></td>
-
-
                </tr>
-
            </table>
+
         </div>
+
     <div class="col-md-2"></div>
 </div>
 

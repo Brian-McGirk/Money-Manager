@@ -18,8 +18,8 @@
 
     <div class="col-md-8">
         <div class="table-wrapper">
-            <table>
 
+            <table>
                 <tr class="table-column">
                     <th class="date-shorten">Date</th>
                     <th>Source</th>
@@ -42,16 +42,16 @@
                     <td class="table-column" colspan="2">Total daily income:</td>
                     <td th:text="'$ ' + ${#numbers.formatDecimal(dailyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>
                 </tr>
-
             </table>
-        </div>
-        <table th:if="${numberOfDailyIncomes >= 16}">
-            <tr>
-                <td class="table-column" colspan="2">Total daily income:</td>
-                <td th:text="'$ ' + ${#numbers.formatDecimal(dailyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>
-            </tr>
-        </table>
 
+        </div>
+
+            <table th:if="${numberOfDailyIncomes >= 16}">
+                <tr>
+                    <td class="table-column" colspan="2">Total daily income:</td>
+                    <td th:text="'$ ' + ${#numbers.formatDecimal(dailyIncomeTotal, 0, 'COMMA', 2, 'POINT')}"></td>
+                </tr>
+            </table>
 
     </div>
 
@@ -70,8 +70,8 @@
                 <span class="error errors" th:errors="*{source}"></span>
                 <label th:for="name">Source</label>
                 <input class="form-control" th:field="*{source}"/>
-
             </div>
+
             <div class="form-group cost">
                 <label th:for="dailyAmount">Earned</label>
                 <span class="error errors" th:errors="*{dailyAmount}" th:text="'Please enter a valid number (i.e. 10.50)'"></span>
@@ -82,10 +82,9 @@
         </form>
 
     </div>
+
     <div class="col-md-2"></div>
 </div>
-</body>
-</html>
 
 </body>
 </html>

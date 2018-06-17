@@ -13,22 +13,20 @@
 
 <div th:replace="fragments:: navigation"></div>
 
-
 <div class="row">
     <div class="col-md-2"></div>
 
     <div class="col-md-8">
-        <!--<form method="post" action="/expense/edit-selection">-->
-            <div class="table-wrapper">
-                <table>
 
+            <div class="table-wrapper">
+
+                <table>
                     <tr class="table-column">
                         <th class="date-shorten">Date added</th>
                         <th class="item-lengthen">Name</th>
                         <th>Cost</th>
                         <th>Frequency</th>
                         <th>Selection</th>
-
                     </tr>
 
                     <tr th:each="expense : ${user.expenses}">
@@ -41,31 +39,14 @@
                         <td th:if="${expense.weeklyCost > 0}" th:text="Weekly"></td>
                         <td>
                             <a th:href="@{'/expense/edit/' + ${expense.id}}">Edit</a>
-                            <!--<input type="checkbox" name="expenseIds" th:value="${expense.id}" th:id="${expense.id}"/>-->
-                            <!--<label th:for="${expense.id}" th:text="${expense.name}"></label>-->
                         </td>
-
-                        <!--<td th:unless="${expense.category == null}" th:text="${expense.category.name}"></td>-->
-                        <!--<td th:unless="${expense.category == null}" th:text="${expense.name}"></td>-->
-                        <!--<td th:unless="${expense.category == null}" th:text="'$ ' + ${expense.weeklyCost}"></td>-->
-                        <!--<td th:unless="${expense.category == null}" th:text="'$ ' + ${expense.monthlyCost}"></td>-->
                     </tr>
-
                 </table>
+
              </div>
 
-            <!--<div class="row">-->
-                <!--<div class="col-md-4"></div>-->
-                <!--<div class="col-md-4">-->
-                    <!--<input class="remove-button" type="submit" value="Edit Expenses" />-->
-                <!--</div>-->
-                <!--<div class="col-md-4"></div>-->
-            <!--</div>-->
-
-        <!--</form>-->
-
-
         <div class="col-md-2"></div>
+
     </div>
 </div>
 
