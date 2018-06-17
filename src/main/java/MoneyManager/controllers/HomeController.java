@@ -7,7 +7,6 @@ import MoneyManager.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
@@ -24,11 +23,11 @@ public class HomeController {
     private String requestedBy;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String displayHome(Model model, HttpSession httpSession){
+    public String displayHome(Model model, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
@@ -36,8 +35,8 @@ public class HomeController {
         Expense expense = new Expense();
         Income income = new Income();
 
-        for(String name : user.getRequestedBy()){
-            if(name != null){
+        for (String name : user.getRequestedBy()) {
+            if (name != null) {
                 requestedBy = name;
                 model.addAttribute("requestedBy", requestedBy);
                 break;
@@ -58,8 +57,8 @@ public class HomeController {
         double partnersDailyIncomeTotal = 0.0;
         int partnersNumberOfDailyIncomes = 0;
 
-        if(partners.size() > 0){
-            for(User partner : partners){
+        if (partners.size() > 0) {
+            for (User partner : partners) {
 
                 partnersDailyExpenseTotal += expense.calcDailyTotal(partner.getExpenses());
                 partnersNumberOfDailyExpenses += expense.getNumberOfDailyExpense(partner.getExpenses());
@@ -70,8 +69,6 @@ public class HomeController {
                 partnerIncomes.addAll(partner.getIncomes());
             }
         }
-
-
 
         double dailyExpenseTotal = partnersDailyExpenseTotal + expense.calcDailyTotal(user.getExpenses());
         int numberOfDailyExpenses = partnersNumberOfDailyExpenses + expense.getNumberOfDailyExpense(user.getExpenses());
@@ -93,6 +90,7 @@ public class HomeController {
         model.addAttribute("numberOfDailyExpenses", numberOfDailyExpenses);
         model.addAttribute("numberOfDailyIncomes", numberOfDailyIncomes);
         model.addAttribute("user", user);
+        model.addAttribute("title", "Home");
 
 
         return "home/index";
@@ -100,11 +98,11 @@ public class HomeController {
     }
 
     @RequestMapping(value = "deny", method = RequestMethod.GET)
-    public String denyPartner(Model model, HttpSession httpSession){
+    public String denyPartner(Model model, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
@@ -118,13 +116,11 @@ public class HomeController {
     }
 
     @RequestMapping(value = "accept", method = RequestMethod.GET)
-    public String allowPartner(Model model, HttpSession httpSession){
-
-
+    public String allowPartner(Model model, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
@@ -132,42 +128,12 @@ public class HomeController {
 
         User partner = userDao.findByUserName(requestedBy);
 
-//        user.setRequestedBy(null);
-
         user.getRequestedBy().remove(requestedBy);
 
         user.addPartnerOf(partner);
-
-//        user.addPartner(partner);
-//        partner.addPartner(user);
 
         userDao.save(user);
 
         return "redirect:";
     }
-
-//    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-//    public String displayView(Model model, @PathVariable int id){
-//
-//        model.addAttribute("user", userDao.findById(id).get());
-//
-//        return "home/view";
-//
-//    }
-
-//    @RequestMapping(value = "home", method = RequestMethod.POST)
-//    public String processHome(Model model, HttpSession httpSession){
-//
-//        Object userInSession = httpSession.getAttribute("user");
-//
-//        if(userInSession == null){
-//            return "redirect:login";
-//        }
-//
-//        model.addAttribute("userName", userInSession);
-//
-//        return "home/index";
-//
-//    }
-
 }

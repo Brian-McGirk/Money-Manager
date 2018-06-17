@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,34 +34,14 @@ public class ExpenseController {
 
     private ArrayList<Expense> expenses = new ArrayList<>();
 
-
-
-//    @RequestMapping(value = "add", method = RequestMethod.GET)
-//    public String displayAddForm(Model model, HttpSession httpSession){
-//
-//        Object userInSession = httpSession.getAttribute("user");
-//
-//        if(userInSession == null){
-//            return "redirect:/user/login";
-//        }
-//
-//        model.addAttribute("title", "Expense");
-//        model.addAttribute("expenses", expenseDao.findAll());
-//        model.addAttribute("categories", categoryDao.findAll());
-//        model.addAttribute(new Expense());
-//
-//        return "expense/add";
-//
-//    }
-
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddForm(Model model, @ModelAttribute @Valid Expense expense, Errors errors,
-                                 @RequestParam int categoryId, HttpSession httpSession){
+                                 @RequestParam int categoryId, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             model.addAttribute("title", "Add");
             model.addAttribute("user", user);
             model.addAttribute(expense);
@@ -87,34 +66,14 @@ public class ExpenseController {
 
     }
 
-//    @RequestMapping(value = "add-daily-expense", method = RequestMethod.GET)
-//    public String displayDailyAddForm(Model model, HttpSession httpSession){
-//
-//        Object userInSession = httpSession.getAttribute("user");
-//
-//        if(userInSession == null){
-//            return "redirect:/user/login";
-//        }
-//
-//        User user = userDao.findByUserName(userInSession.toString());
-//
-//
-//        model.addAttribute("title", "Add Daily Expense");
-//        model.addAttribute("user", user);
-//        model.addAttribute(new Expense());
-//
-//        return "expense/add-daily";
-//    }
-
-
     @RequestMapping(value = "add-daily-expense", method = RequestMethod.POST)
     public String processDailyAddForm(Model model, @ModelAttribute @Valid Expense expense,
-                                      Errors errors, HttpSession httpSession){
+                                      Errors errors, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             model.addAttribute("title", "Add Daily Expense");
             model.addAttribute("user", user);
             model.addAttribute(expense);
@@ -122,8 +81,6 @@ public class ExpenseController {
             model.addAttribute("numberOfDailyExpenses", expense.getNumberOfDailyExpense(user.getExpenses()));
             return "expense/viewDaily";
         }
-
-
 
         expenseDao.save(expense);
         user.addItem(expense);
@@ -136,11 +93,11 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "view-daily", method = RequestMethod.GET)
-    public String viewDailyExpense(Model model, HttpSession httpSession){
+    public String viewDailyExpense(Model model, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
@@ -156,8 +113,8 @@ public class ExpenseController {
         double partnersDailyTotal = 0.0;
         int partnersNumberOfDailyExpenses = 0;
 
-        if(partners.size() > 0){
-            for(User partner : partners){
+        if (partners.size() > 0) {
+            for (User partner : partners) {
                 partnersDailyTotal += expense.calcDailyTotal(partner.getExpenses());
                 partnersNumberOfDailyExpenses += expense.getNumberOfDailyExpense(partner.getExpenses());
                 partnerExpenses.addAll(partner.getExpenses());
@@ -168,6 +125,7 @@ public class ExpenseController {
         int numberOfDailyExpenses = partnersNumberOfDailyExpenses + expense.getNumberOfDailyExpense(user.getExpenses());
 
 
+        model.addAttribute("title", "Daily Expenses");
         model.addAttribute("partnerExpenses", partnerExpenses);
         model.addAttribute("user", user);
         model.addAttribute(expense);
@@ -182,12 +140,13 @@ public class ExpenseController {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
         User user = userDao.findByUserName(userInSession.toString());
 
+        model.addAttribute("title", "Remove Expense");
         model.addAttribute("user", user);
         model.addAttribute("title", "Remove Expenses");
         return "expense/remove";
@@ -196,7 +155,7 @@ public class ExpenseController {
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveExpenseForm(@RequestParam(required = false) int[] expenseIds) {
 
-        if(expenseIds == null){
+        if (expenseIds == null) {
             return "redirect:/home";
         }
 
@@ -208,61 +167,38 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "edit-selection", method = RequestMethod.GET)
-    public String displayEditSelectionForm(Model model, HttpSession httpSession){
+    public String displayEditSelectionForm(Model model, HttpSession httpSession) {
 
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
         User user = userDao.findByUserName(userInSession.toString());
 
+        model.addAttribute("title", "Edit Expense");
         model.addAttribute("user", user);
 
         return "expense/edit-selection";
     }
-
-//    @RequestMapping(value = "edit-selection", method = RequestMethod.POST)
-//    public String processEditSelectionForm(Model model, @RequestParam(required = false) int expenseId, HttpSession httpSession) {
-//
-//
-//        Optional<Expense> expenseOptional;
-//
-//
-//
-//
-////        for (int expenseId : expenseIds) {
-//            expenseOptional = expenseDao.findById(expenseId);
-//            Expense expense = expenseOptional.get();
-//            expenses.add(expense);
-////        }
-//
-//
-//
-//        model.addAttribute(new Expense());
-//        model.addAttribute("expenses", expenses);
-//
-//        return "expense/edit";
-//    }
 
     @RequestMapping(value = "edit/{expenseId}", method = RequestMethod.GET)
     public String processEditSelectionForm(Model model, @PathVariable int expenseId, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
         User user = userDao.findByUserName(userInSession.toString());
 
-
         Optional<Expense> expenseOptional = expenseDao.findById(expenseId);
         Expense expense = expenseOptional.get();
 
-
+        model.addAttribute("title", "Edit Expense");
         model.addAttribute(expense);
         model.addAttribute("user", user);
 
@@ -278,11 +214,10 @@ public class ExpenseController {
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             model.addAttribute(expense);
             return "expense/edit";
         }
-
 
         Optional<Category> categoryObject = categoryDao.findById(categoryId);
         Category category = categoryObject.get();
@@ -299,46 +234,4 @@ public class ExpenseController {
         return "redirect:/home";
 
     }
-
-
-
-//
-//
-//        expenseDao.save(expense);
-//
-//        return "redirect:/home";
-//    }
-
-//        for (int expenseId : expenseIds) {
-//            expenseDao.deleteById(expenseId);
-//        }
-
-//        Optional<Expense> expenseOptional = expenseDao.findById(id);
-//        Expense expense = expenseOptional.get();
-//
-//        model.addAttribute("expense", expense);
-//        model.addAttribute("user", user);
-//        expenseDao.deleteById(id);
-
-
-//    @RequestMapping(value = "edit", method = RequestMethod.POST)
-//    public String processEditForm(@ModelAttribute @Valid Expense expense, Errors errors, Model model,
-//                                  @PathVariable(required = false) int id, HttpSession httpSession){
-//
-//        Object userInSession = httpSession.getAttribute("user");
-//        User user = userDao.findByUserName(userInSession.toString());
-//
-//        if(errors.hasErrors()){
-//            model.addAttribute("expense", expense);
-//            model.addAttribute("user", user);
-//
-//            return "expense/edit";
-//        }
-//
-//
-//        expenseDao.save(expense);
-//
-//        return "redirect:/home";
-//    }
-
 }

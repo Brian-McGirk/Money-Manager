@@ -5,7 +5,7 @@
 
     <div th:replace="fragments :: head"></div>
     <div th:replace="fragments :: navBarMargin"></div>
-    <link rel="stylesheet" th:href="@{/css/jsoupView.css}" />
+    <link rel="stylesheet" th:href="@{/css/jsoup.css}" />
 
 </head>
 
@@ -30,9 +30,10 @@
 
                </tr>
                <tr th:each="title,index : ${titles}" th:unless="${title.length() == 0}">
-
-                   <td><a th:href="${links[index.index]}" th:text="${stores[index.index]}"></a></td>
-                   <td th:text="${titles[index.index]}"></td>
+                   <td th:text="${stores[index.index]}"></td>
+                   <!--<td><a th:href="${links[index.index]}" th:text="${stores[index.index]}"></a></td>-->
+                   <td><a th:href="${links[index.index]}" th:text="${titles[index.index]}"></a></td>
+                   <!--<td th:text="${titles[index.index]}"></td>-->
                    <td th:text="${prices[index.index]}"></td>
 
 

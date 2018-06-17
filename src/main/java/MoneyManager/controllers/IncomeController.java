@@ -1,7 +1,5 @@
 package MoneyManager.controllers;
 
-import MoneyManager.models.Category;
-import MoneyManager.models.Expense;
 import MoneyManager.models.Income;
 import MoneyManager.models.User;
 import MoneyManager.models.data.IncomeDao;
@@ -89,8 +87,6 @@ public class IncomeController {
             return "income/viewDaily";
         }
 
-
-
         incomeDao.save(income);
         user.addIncome(income);
         userDao.save(user);
@@ -132,7 +128,7 @@ public class IncomeController {
         double dailyIncomeTotal = partnersDailyTotal + income.calcDailyAmount(user.getIncomes());
         int numberOfDailyIncomes = partnersNumberOfDailyIncomes + income.getNumberOfDailyIncome(user.getIncomes());
 
-
+        model.addAttribute("title", "Daily Income");
         model.addAttribute("partnerIncomes", partnerIncomes);
         model.addAttribute("user", user);
         model.addAttribute(income);
@@ -184,6 +180,7 @@ public class IncomeController {
 
         User user = userDao.findByUserName(userInSession.toString());
 
+        model.addAttribute("title", "Edit Income");
         model.addAttribute("user", user);
 
         return "income/edit-selection";
@@ -204,7 +201,7 @@ public class IncomeController {
         Optional<Income> incomeOptional = incomeDao.findById(incomeId);
         Income income = incomeOptional.get();
 
-
+        model.addAttribute("title", "Edit Income");
         model.addAttribute(income);
         model.addAttribute("user", user);
 

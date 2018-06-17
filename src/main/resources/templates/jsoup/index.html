@@ -5,6 +5,7 @@
 
     <div th:replace="fragments :: head"></div>
     <div th:replace="fragments :: navBarMargin"></div>
+    <link rel="stylesheet" th:href="@{/css/jsoup.css}" />
 
 </head>
 
@@ -12,12 +13,23 @@
 
 <div th:replace="fragments :: navigation"></div>
 
+<h3>Enter an item below to find deals on related items!</h3>
 
-<form method="post">
-    <label for="searchTerm"></label>
-    <input type="text" id="searchTerm" name="searchTerm"/>
-    <input type="submit" value="Search"/>
-</form>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form method="post">
+            <label for="searchTerm"></label>
+            <input type="text" id="searchTerm" name="searchTerm"/>
+            <input type="submit" value="Find deals"/>
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+
 
 </body>
 </html>

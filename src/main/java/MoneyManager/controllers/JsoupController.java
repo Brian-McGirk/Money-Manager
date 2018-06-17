@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @Controller
@@ -38,6 +36,7 @@ public class JsoupController {
 
         User user = userDao.findByUserName(userInSession.toString());
 
+        model.addAttribute("title", "Find Deals");
         model.addAttribute("user", user);
 
         return "jsoup/index";
@@ -103,7 +102,7 @@ public class JsoupController {
             }
         }
 
-
+        model.addAttribute("title", "Deals");
         model.addAttribute("titles", titles);
         model.addAttribute("prices", prices);
         model.addAttribute("stores", stores);

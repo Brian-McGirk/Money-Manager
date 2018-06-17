@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("category")
@@ -30,22 +28,6 @@ public class CategoryController {
 
     @Autowired
     private ExpenseDao expenseDao;
-
-//    @RequestMapping(value="add", method = RequestMethod.GET)
-//    public String displayAddForm(Model model, HttpSession httpSession){
-//
-//        Object userInSession = httpSession.getAttribute("user");
-//
-//        if(userInSession == null){
-//            return "redirect:/user/login";
-//        }
-//
-//        model.addAttribute("title", "Add Category");
-//        model.addAttribute(new Category());
-//
-//
-//        return "category/add";
-//    }
 
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddForm(Model model, @ModelAttribute @Valid Category category, Errors errors,
@@ -104,6 +86,7 @@ public class CategoryController {
 
         User user = userDao.findByUserName(userInSession.toString());
 
+        model.addAttribute("title", "Remove");
         model.addAttribute("user", user);
         model.addAttribute("title", "Remove Category");
         return "category/remove";

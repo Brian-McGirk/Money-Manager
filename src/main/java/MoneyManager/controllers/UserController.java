@@ -34,89 +34,99 @@ public class UserController {
     private CategoryDao categoryDao;
 
     @RequestMapping(value = "logout")
-    public String logout(HttpSession httpSession){
+    public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("user");
         return "redirect:login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String displayLogin(Model model){
+    public String displayLogin(Model model) {
 
+        model.addAttribute("title", "Login");
         model.addAttribute(new User());
 
         return "user/login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String processLogin(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
+    public String processLogin(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession) {
 
         User findByUserName = userDao.findByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession != null){
+        if (userInSession != null) {
+            model.addAttribute("title", "Login");
             model.addAttribute("nameError", "A user is already logged in");
             return "user/login";
         }
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Login");
             model.addAttribute(user);
             return "user/login";
         }
 
-        if(findByUserName == null){
+        if (findByUserName == null) {
+            model.addAttribute("title", "Login");
             model.addAttribute("nameError", "Username doesn't exist");
             return "user/login";
         }
 
-//        findByUserName.getPassword().equals(user.getPassword())
-        if(findByUserName != null && BCrypt.checkpw(user.getPassword(), findByUserName.getPw_hash())){
+        if (findByUserName != null && BCrypt.checkpw(user.getPassword(), findByUserName.getPw_hash())) {
             httpSession.setAttribute("user", user.getUserName());
             return "redirect:/home";
         }
 
+        model.addAttribute("title", "Login");
         model.addAttribute("passwordError", "Invalid password");
 
         return "user/login";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String displayRegister(Model model){
+    public String displayRegister(Model model) {
 
+        model.addAttribute("title", "Register");
         model.addAttribute(new User());
 
         return "user/register";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String processRegister(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession){
+    public String processRegister(Model model, @ModelAttribute @Valid User user, Errors errors, HttpSession httpSession) {
 
         boolean userName = userDao.existsByUserName(user.getUserName());
         Object userInSession = httpSession.getAttribute("user");
 
 
-        if(userInSession != null){
+        if (userInSession != null) {
+            model.addAttribute("title", "Register");
             model.addAttribute("nameError", "A user is already logged in");
             return "user/register";
         }
 
-        if(userName){
+        if (userName) {
+            model.addAttribute("title", "Register");
             model.addAttribute("nameError", "Username already exists");
             return "user/register";
         }
 
 
-        if(!user.getPassword().equals(user.getVerifyPassword())){
+        if (!user.getPassword().equals(user.getVerifyPassword())) {
+            model.addAttribute("title", "Register");
             model.addAttribute("matchError", "Passwords don't match");
         }
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Register");
             model.addAttribute(user);
             return "user/register";
         }
 
 
-        if(user.getPassword().equals(user.getVerifyPassword())){
-            if(userInSession != null && userInSession.equals(user.getUserName())){
+        if (user.getPassword().equals(user.getVerifyPassword())) {
+            if (userInSession != null && userInSession.equals(user.getUserName())) {
+                model.addAttribute("title", "Register");
                 model.addAttribute("nameError", "User already logged in");
                 return "user/register";
             }
@@ -124,35 +134,31 @@ public class UserController {
             user.setPw_hash(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             httpSession.setAttribute("user", user.getUserName());
 
-
             userDao.save(user);
 
             return "redirect:/home";
         }
 
-
-
         return "user/register";
     }
 
     @RequestMapping(value = "edit")
-    public String displayEditLinks(Model model){
+    public String displayEditLinks(Model model) {
 
         return "user/edit/index";
     }
 
 
     @RequestMapping(value = "add-expense", method = RequestMethod.GET)
-    public String displayAddForm(Model model, HttpSession httpSession){
+    public String displayAddForm(Model model, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
         User user = userDao.findByUserName(userInSession.toString());
-
 
 
         model.addAttribute("title", "Add");
@@ -164,16 +170,16 @@ public class UserController {
         return "user/add-expense";
     }
 
-    @RequestMapping(value="add-expense", method = RequestMethod.POST)
+    @RequestMapping(value = "add-expense", method = RequestMethod.POST)
     public String processAddForm(Model model, @RequestParam String categoryName, HttpSession httpSession,
-                                 @ModelAttribute @Valid Expense expense, Errors errors){
+                                 @ModelAttribute @Valid Expense expense, Errors errors) {
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
 
 
-        if(errors.hasErrors() || categoryName == null || categoryName.length() > 15 || categoryName.length() < 3){
-            if(categoryName == null || categoryName.length() > 15 || categoryName.length() < 3){
+        if (errors.hasErrors() || categoryName == null || categoryName.length() > 15 || categoryName.length() < 3) {
+            if (categoryName == null || categoryName.length() > 15 || categoryName.length() < 3) {
                 model.addAttribute("categoryNameError", "Category must between 3 and 15 characters");
             }
             model.addAttribute("title", "Add");
@@ -184,10 +190,10 @@ public class UserController {
             return "user/add-expense";
         }
 
-        if(categoryDao.existsByName(categoryName)){
+        if (categoryDao.existsByName(categoryName)) {
             Iterable<Category> categories = user.getCategories();
-            for(Category userCategory : categories){
-                if(userCategory.getName().toLowerCase().equals(categoryName.toLowerCase())){
+            for (Category userCategory : categories) {
+                if (userCategory.getName().toLowerCase().equals(categoryName.toLowerCase())) {
                     model.addAttribute("title", "Add");
                     model.addAttribute("categoryNameError", "That category already exists");
                     model.addAttribute("user", user);
@@ -217,17 +223,16 @@ public class UserController {
 
         userDao.save(user);
 
-
         return "redirect:add-expense";
 
     }
 
     @RequestMapping(value = "settings", method = RequestMethod.GET)
-    public String displaySettings(Model model, HttpSession httpSession){
+    public String displaySettings(Model model, HttpSession httpSession) {
 
         Object userInSession = httpSession.getAttribute("user");
 
-        if(userInSession == null){
+        if (userInSession == null) {
             return "redirect:/user/login";
         }
 
@@ -241,19 +246,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "settings", method = RequestMethod.POST)
-    public String processSettingsForm(Model model, HttpSession httpSession, @RequestParam String userName){
+    public String processSettingsForm(Model model, HttpSession httpSession, @RequestParam String userName) {
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
 
-        if(!userDao.existsByUserName(userName)){
+        if (!userDao.existsByUserName(userName)) {
             model.addAttribute("title", "Settings");
             model.addAttribute("userError", "That user doesn't exist");
             model.addAttribute("user", user);
             return "user/settings";
         }
 
-        if(user.getUserName().equals(userName)){
+        if (user.getUserName().equals(userName)) {
             model.addAttribute("title", "Settings");
             model.addAttribute("userError", "You cannot partner with yourself");
             model.addAttribute("requestSent", "");
@@ -261,18 +266,8 @@ public class UserController {
             return "user/settings";
         }
 
-        for(User partner : user.getPartners()){
-            if(partner.getUserName().equals(userName)){
-               model.addAttribute("title", "Settings");
-               model.addAttribute("userError", "You are already partners with this user");
-                model.addAttribute("requestSent", "");
-                model.addAttribute("user", user);
-               return "user/settings";
-            }
-        }
-
-        for(User partnerOf : user.getPartnersOf()){
-            if(partnerOf.getUserName().equals(userName)){
+        for (User partner : user.getPartners()) {
+            if (partner.getUserName().equals(userName)) {
                 model.addAttribute("title", "Settings");
                 model.addAttribute("userError", "You are already partners with this user");
                 model.addAttribute("requestSent", "");
@@ -281,23 +276,21 @@ public class UserController {
             }
         }
 
-
+        for (User partnerOf : user.getPartnersOf()) {
+            if (partnerOf.getUserName().equals(userName)) {
+                model.addAttribute("title", "Settings");
+                model.addAttribute("userError", "You are already partners with this user");
+                model.addAttribute("requestSent", "");
+                model.addAttribute("user", user);
+                return "user/settings";
+            }
+        }
 
         User partner = userDao.findByUserName(userName);
-
-//        partner.setRequestedBy(user.getUserName());
 
         partner.addRequest(user.getUserName());
 
         userDao.save(partner);
-//      user.addPartner(partner);
-//      partner.addPartner(user);
-
-
-//        userDao.save(user);
-
-
-//      userDao.save(partner);
 
         model.addAttribute("title", "Settings");
         model.addAttribute("requestSent", "Your request has been sent!");
@@ -306,36 +299,4 @@ public class UserController {
 
         return "user/settings";
     }
-
-
 }
-
-//    @RequestMapping(value = "add-expense", method = RequestMethod.GET)
-//    public String displayAddExpense(Model model, HttpSession httpSession){
-//
-//        Object userInSession = httpSession.getAttribute("user");
-//        User user = userDao.findByUserName(userInSession.toString());
-//
-//        AddUserExpenseForm form = new AddUserExpenseForm(expenseDao.findAll(), user);
-//
-//        model.addAttribute("form", form);
-//
-//        return "user/add-expense";
-//    }
-//
-//    @RequestMapping(value = "add-expense", method = RequestMethod.POST)
-//    public String processAddExpense(Model model, @ModelAttribute @Valid AddUserExpenseForm form,
-//                                    Errors errors){
-//
-//        if(errors.hasErrors()){
-//            model.addAttribute("form", form);
-//            return "user/add-expense";
-//        }
-//
-//        Expense expense = expenseDao.findById(form.getExpenseId()).get();
-//        User user = userDao.findById(form.getUserId()).get();
-//        user.addItem(expense);
-//        userDao.save(user);
-//
-//        return "redirect:/home/view/" + user.getId();
-//    }

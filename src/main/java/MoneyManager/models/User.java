@@ -3,7 +3,6 @@ package MoneyManager.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -77,15 +76,6 @@ public class User {
         this.pw_hash = pw_hash;
     }
 
-//    public String getRequestedBy() {
-//        return requestedBy;
-//    }
-//
-//    public void setRequestedBy(String requestedBy) {
-//        this.requestedBy = requestedBy;
-//    }
-
-
     public List<String> getRequestedBy() {
         return requestedBy;
     }
@@ -148,11 +138,4 @@ public class User {
 
     public void addIncome(Income income){incomes.add(income);}
 
-
-
-    //    private void checkPassword(){
-//        if(this.password != null && this.verifyPassword != null && !this.password.equals(this.verifyPassword)){
-//            this.verifyPassword = null;
-//        }
-//    }
 }
