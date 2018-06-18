@@ -5,7 +5,7 @@ gapi.load('auth2', function(){
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
 
-//  TODO figure out why jquery doesn't work
+//  TODO finish implementing google sign in
     $(.g-signin2).css("display","none");
     $("#pic").attr('src',profile.getImageUrl());
     $("#email").text(profile.getEmail());
