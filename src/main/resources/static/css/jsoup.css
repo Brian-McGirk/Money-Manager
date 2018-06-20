@@ -11,3 +11,12 @@ table{
 h3 {
     text-align: center;
 }
+
+.form-submit{
+    width: 80%;
+    margin-left: 4px;
+}
+
+.form-text-box{
+    width: 80%;
+}

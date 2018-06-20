@@ -13,20 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.ElementCollection;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
 
 @Controller
-@RequestMapping("price-comparison")
+@RequestMapping("deals")
 public class JsoupController {
 
     @Autowired
     private UserDao userDao;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String displayPriceComparison(Model model, HttpSession httpSession) throws IOException {
+    public String displaySearch(Model model, HttpSession httpSession) throws IOException {
 
         Object userInSession = httpSession.getAttribute("user");
 
@@ -43,10 +44,16 @@ public class JsoupController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public String processPriceComparison(Model model, HttpSession httpSession, @RequestParam String searchTerm) throws IOException {
+    public String processSearch(Model model, HttpSession httpSession, @RequestParam String searchTerm) throws IOException {
 
         Object userInSession = httpSession.getAttribute("user");
         User user = userDao.findByUserName(userInSession.toString());
+
+        if(searchTerm.length() < 3 || searchTerm.length() > 20){
+            model.addAttribute("title", "Deals");
+            model.addAttribute("error", "Please enter a search term between 3 and 20 characters");
+            return "jsoup/index";
+        }
 
         String[] searchTermSplit = searchTerm.split("\\s+");
 
