@@ -125,6 +125,7 @@ public class User {
     }
 
     public List<User> getPartnersOf() {
+
         return partnersOf;
     }
 
@@ -132,7 +133,9 @@ public class User {
         partnersOf.add(user);
     }
 
-    public void addCategory(Category category){categories.add(category);}
+    public void addCategory(Category category){
+        categories.add(category);
+    }
 
     public List<Income> getIncomes() { return incomes; }
 

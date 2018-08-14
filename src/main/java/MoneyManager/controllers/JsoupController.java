@@ -59,9 +59,14 @@ public class JsoupController {
 
         String searchTermJoined = String.join("+", searchTermSplit);
 
-        Document doc = Jsoup.connect("https://slickdeals.net/newsearch.php?src=SearchBarV2&" +
-                "q="+ searchTermJoined +"&pp=20&sort=relevance&previousdays=-1&forumid%5B%5D=25&forumid%5B" +
-                "%5D=30&forumid%5B%5D=9").get();
+//        Document doc = Jsoup.connect("https://slickdeals.net/newsearch.php?src=SearchBarV2&" +
+//                "q="+ searchTermJoined +"&pp=20&sort=relevance&previousdays=-1&forumid%5B%5D=25&forumid%5B" +
+//                "%5D=30&forumid%5B%5D=9").get();
+
+        Document doc = Jsoup.connect("https://slickdeals.net/newsearch.php?src=SearchBarV2&%22+++%22" +
+                "q=%22"+ searchTermJoined +"%22&q="+ searchTermJoined +"&pp=20&sort=relevance&previousdays=-1&forumid%5B%5D=30&forumid%5B%5D=9&" +
+                "forumid%5B%5D=25").get();
+
 
         Elements titleElements = doc.select("div.resultRow:contains("+ searchTerm +")"); // a.dealTitle
 
