@@ -234,4 +234,21 @@ public class ExpenseController {
         return "redirect:/home";
 
     }
+
+    @RequestMapping(value = "view-monthly")
+    public String viewMonthlyExpense(Model model, HttpSession httpSession){
+
+        Object userInSession = httpSession.getAttribute("user");
+
+        if (userInSession == null) {
+            return "redirect:/user/login";
+        }
+
+        User user = userDao.findByUserName(userInSession.toString());
+
+        model.addAttribute("title", "Monthly Expense");
+        model.addAttribute("user", user);
+
+        return "expense/viewMonthly";
+    }
 }
